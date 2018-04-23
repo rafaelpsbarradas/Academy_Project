@@ -57,6 +57,8 @@ public class BookDAO {
 		statement.setString(1, book.getTitle());
 		statement.setString(2, book.getAuthor());
 		statement.setFloat(3, book.getPrice());
+                statement.setInt(4, book.getPublishYear());
+                statement.setString(5, book.getPublisher());
 		
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
@@ -75,12 +77,14 @@ public class BookDAO {
 		ResultSet resultSet = statement.executeQuery(sql);
 		
 		while (resultSet.next()) {
-			int id = resultSet.getInt("book_id");
+			//int id = resultSet.getInt("book_id");
 			String title = resultSet.getString("title");
 			String author = resultSet.getString("author");
 			float price = resultSet.getFloat("price");
+                        int publishYear = resultSet.getInt("publish_year");
+                        String publisher = resultSet.getString("publish");
 			
-			Book book = new Book(id, title, author, price);
+			Book book = new Book(title,author,price,publishYear, publisher);
 			listBook.add(book);
 		}
 		
@@ -139,7 +143,7 @@ public class BookDAO {
 			String author = resultSet.getString("author");
 			float price = resultSet.getFloat("price");
 			
-			book = new Book(id, title, author, price);
+			book = new Book(title, author, price, id, author);
 		}
 		
 		resultSet.close();

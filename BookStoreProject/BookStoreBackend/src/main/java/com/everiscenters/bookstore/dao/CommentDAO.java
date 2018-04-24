@@ -54,7 +54,7 @@ public class CommentDAO {
         public boolean insertComment(Comment comment) throws SQLException {
 		String sql = "INSERT INTO comments ( comment_text, date) VALUES ( ?, ?)";
 		connect();
-		
+// Erro na formatação não consegue converter String para date		
 //                Date date = new Date();
 //                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);

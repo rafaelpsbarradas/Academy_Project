@@ -27,6 +27,28 @@ public class Book {
             this.publisher = publisher;
         }
 
+        public Book(int id, String title, String author, float price, int publishYear, String publisher) {
+            this.id = id;
+            this.title = title;
+            this.author = author;
+            this.price = price;
+            this.publishYear = publishYear;
+            this.publisher = publisher;
+        }
+
+        public Book(int id, String title, String author, float price) {
+            this.id = id;
+            this.title = title;
+            this.author = author;
+            this.price = price;
+        }
+
+        public Book(String title, String author, float price) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        }
+        
 	public int getId() {
 		return id;
 	}

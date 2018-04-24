@@ -77,14 +77,14 @@ public class BookDAO {
 		ResultSet resultSet = statement.executeQuery(sql);
 		
 		while (resultSet.next()) {
-			//int id = resultSet.getInt("book_id");
+			int id = resultSet.getInt("book_id");
 			String title = resultSet.getString("title");
 			String author = resultSet.getString("author");
 			float price = resultSet.getFloat("price");
                         int publishYear = resultSet.getInt("publish_year");
                         String publisher = resultSet.getString("publisher");
 			
-			Book book = new Book(title,author,price,publishYear, publisher);
+			Book book = new Book(id,title,author,price,publishYear, publisher);
 			listBook.add(book);
 		}
 		
@@ -143,7 +143,7 @@ public class BookDAO {
 			String author = resultSet.getString("author");
 			float price = resultSet.getFloat("price");
 			
-			book = new Book(title, author, price, id, author);
+			book = new Book(id, title, author, price, id, author);
 		}
 		
 		resultSet.close();

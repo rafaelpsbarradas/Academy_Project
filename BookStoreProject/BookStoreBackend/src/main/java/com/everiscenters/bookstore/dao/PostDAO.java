@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,7 +74,7 @@ public class PostDAO {
 		
 		while (resultSet.next()) {
 			int id = resultSet.getInt("idpost");
-			String date = resultSet.getString("date");
+			Date date = resultSet.getDate("date");
 			String title = resultSet.getString("title");
                         
 			Post post = new Post(id, date, title);
@@ -126,7 +127,7 @@ public class PostDAO {
 		
 		if (resultSet.next()) {
 			String title = resultSet.getString("title");
-                        String date = resultSet.getString("date");
+                        Date date = resultSet.getDate("date");
 			
 			post = new Post(title,date);
 		}

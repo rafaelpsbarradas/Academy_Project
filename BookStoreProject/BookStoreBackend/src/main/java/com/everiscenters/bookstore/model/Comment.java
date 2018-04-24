@@ -5,20 +5,21 @@
  */
 package com.everiscenters.bookstore.model;
 
+import java.util.Date;
+
 /**
  *
  * @author fvitordu
  */
-public class Comment {
+public class Comment extends Post{
     int id;
     String textComment;
-    String date;
+    Date commentDate;
 
-    public Comment(int id, String textComment, String date) {
-        this.id = id;
-        this.textComment = textComment;
-        this.date = date;
+    public Comment(int idPost) {
+        super(idPost);
     }
+
     public int getCommentId() {
         return id;
     }
@@ -35,11 +36,11 @@ public class Comment {
         this.textComment = textComment;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -5,16 +5,27 @@
  */
 package com.everiscenters.bookstore.model;
 
+import java.util.Date;
+
 /**
  *
  * @author fvitordu
  */
 public class Post {
     int idPost;
-    String title;
-    String date;
 
-    public Post(int idPost, String date,String title) {
+    public Post(int idPost) {
+        this.idPost = idPost;
+    }
+    String title;
+    Date date;
+
+    public Post(String title, Date date) {
+        this.title = title;
+        this.date = date;
+    }
+
+    public Post(int idPost, Date date,String title) {
         this.idPost = idPost;
         this.date = date;
     }
@@ -26,11 +37,11 @@ public class Post {
         this.idPost = idPost;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
     public String getTitle() {

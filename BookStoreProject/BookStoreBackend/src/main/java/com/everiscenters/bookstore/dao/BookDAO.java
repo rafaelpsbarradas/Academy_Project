@@ -82,7 +82,7 @@ public class BookDAO {
 			String author = resultSet.getString("author");
 			float price = resultSet.getFloat("price");
                         int publishYear = resultSet.getInt("publish_year");
-                        String publisher = resultSet.getString("publish");
+                        String publisher = resultSet.getString("publisher");
 			
 			Book book = new Book(title,author,price,publishYear, publisher);
 			listBook.add(book);

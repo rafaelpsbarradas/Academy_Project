@@ -13,11 +13,15 @@ public class Post {
     int idPost;
     String date;
 
-    public int getIdPost() {
+    public Post(int idPost, String date) {
+        this.idPost = idPost;
+        this.date = date;
+    }
+    public int getPostId() {
         return idPost;
     }
 
-    public void setIdPost(int idPost) {
+    public void setPostId(int idPost) {
         this.idPost = idPost;
     }
 
@@ -29,8 +33,4 @@ public class Post {
         this.date = date;
     }
 
-    public Post(int idPost, String date) {
-        this.idPost = idPost;
-        this.date = date;
-    }
 }

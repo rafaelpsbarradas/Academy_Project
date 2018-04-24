@@ -122,7 +122,7 @@
     <div class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">EviConnected</a>
+                <a>EviConnected</a>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">Username(meternome)
@@ -139,17 +139,17 @@
         </div> 
     </div>
     <div class="container">
+        <div class="list-group-item" style="text-align: center">
         <h2>MyPostList</h2>
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Recent</a>
-            <a href="#" class="list-group-item list-group-item-action">to</a>
-            <a href="#" class="list-group-item list-group-item-action">Old Post</a>
+            <li><a href="#" class="list-group-item list-group-item-action">Recent</a></li>
+            <li><a href="#" class="list-group-item list-group-item-action">to</a></li>
+           <li> <a href="#" class="list-group-item list-group-item-action">Old Post</a></li>
         
         <h2>GeneralPostList</h2>
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">Recent</a>
-            <a href="#" class="list-group-item list-group-item-action">to</a>
-            <a href="#" class="list-group-item list-group-item-action">Old Post</a>
+            <li><a href="#" class="list-group-item list-group-item-action">Recent</a></li>
+            <li><a href="#" class="list-group-item list-group-item-action">to</a></li>
+            <li><a href="#" class="list-group-item list-group-item-action">Old Post</a></li>
         
         </div>
        </div>

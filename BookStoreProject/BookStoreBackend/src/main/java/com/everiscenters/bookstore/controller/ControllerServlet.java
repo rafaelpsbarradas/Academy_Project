@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.everiscenters.bookstore.dao.BookDAO;
+import com.everiscenters.bookstore.dao.UserDAO;
 import com.everiscenters.bookstore.model.Book;
 
 /**
@@ -59,8 +60,14 @@ public class ControllerServlet extends HttpServlet {
 			case "/update":
 				updateBook(request, response);
 				break;
-			default:
+                        case "/list":
 				listBook(request, response);
+				break;
+                        case "/register":
+				register(request, response);
+				break;
+			default:
+				login(request, response); //listBook(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -69,12 +76,26 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	private void listBook(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-		List<Book> listBook = bookDAO.listAllBooks();
+		//if(request != null && !request.getParameter("username").isEmpty() && UserDAO.getUser(request.getParameter("username")))){
+                  if(request != null && !request.getParameter("username").isEmpty() && UserDAO.getUser(request.getParameter("username"))){ 
+                }
+                
+                List<Book> listBook = bookDAO.listAllBooks();
 		request.setAttribute("listBook", listBook);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
 		dispatcher.forward(request, response);
 	}
 
+         private void login(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+		dispatcher.forward(request, response);
+	}
+         
+        private void register(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
+		dispatcher.forward(request, response);
+	}
+        
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("BookForm.jsp");
 		dispatcher.forward(request, response);
@@ -118,5 +139,4 @@ public class ControllerServlet extends HttpServlet {
 		response.sendRedirect("list");
 
 	}
-
 }

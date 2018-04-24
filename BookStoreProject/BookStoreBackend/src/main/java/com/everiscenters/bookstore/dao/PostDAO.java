@@ -129,7 +129,7 @@ public class PostDAO {
 			String title = resultSet.getString("title");
                         Date date = resultSet.getDate("date");
 			
-			post = new Post(title,date);
+			//post = new Post(title,date);
 		}
 		
 		resultSet.close();

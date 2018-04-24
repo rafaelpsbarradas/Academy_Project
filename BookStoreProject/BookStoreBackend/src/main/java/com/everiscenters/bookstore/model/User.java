@@ -16,19 +16,19 @@ public class User {
     String email;
     String firstName;
     String lastName;
-    String birthdayDate;
+    String birthDayDate;
 
     public User(int id) {
         this.id = id;
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, String birthdayDate) {
+    public User(String username, String password, String email, String firstName, String lastName, String birthDayDate) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDate = birthdayDate;
+        this.birthDayDate = birthDayDate;
     }
     public int getUserId() {
         return id;
@@ -79,11 +79,11 @@ public class User {
     }
 
     public String getBirthdayDate() {
-        return birthdayDate;
+        return birthDayDate;
     }
 
-    public void setBirthdayDate(String birthdayDate) {
-        this.birthdayDate = birthdayDate;
+    public void setBirthdayDate(String birthDayDate) {
+        this.birthDayDate = birthDayDate;
     }
 
 }

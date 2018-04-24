@@ -11,9 +11,10 @@ package com.everiscenters.bookstore.model;
  */
 public class Post {
     int idPost;
+    String title;
     String date;
 
-    public Post(int idPost, String date) {
+    public Post(int idPost, String date,String title) {
         this.idPost = idPost;
         this.date = date;
     }
@@ -31,6 +32,12 @@ public class Post {
 
     public void setDate(String date) {
         this.date = date;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }

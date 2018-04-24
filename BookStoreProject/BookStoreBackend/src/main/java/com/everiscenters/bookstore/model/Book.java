@@ -1,5 +1,4 @@
 package com.everiscenters.bookstore.model;
-
 /**
  * Book.java
  * 
@@ -9,28 +8,24 @@ package com.everiscenters.bookstore.model;
  *
  */
 public class Book {
+
 	protected int id;
 	protected String title;
 	protected String author;
 	protected float price;
-
-	public Book() {
-	}
-
-	public Book(int id) {
-		this.id = id;
-	}
-
-	public Book(int id, String title, String author, float price) {
-		this(title, author, price);
-		this.id = id;
-	}
-	
-	public Book(String title, String author, float price) {
-		this.title = title;
-		this.author = author;
-		this.price = price;
-	}
+        private int publishYear;
+        private String publisher;
+        
+        public Book(int id){
+            this.id=id;
+        }
+        public Book(String title, String author, float price, int publishYear, String publisher) {
+            this.title = title;
+            this.author = author;
+            this.price = price;
+            this.publishYear = publishYear;
+            this.publisher = publisher;
+        }
 
 	public int getId() {
 		return id;
@@ -63,5 +58,33 @@ public class Book {
 	public void setPrice(float price) {
 		this.price = price;
 	}
+
+        /**
+         * @return the publishYear
+         */
+        public int getPublishYear() {
+            return publishYear;
+        }
+
+        /**
+         * @param publishYear the publishYear to set
+         */
+        public void setPublishYear(int publishYear) {
+            this.publishYear = publishYear;
+        }
+
+        /**
+         * @return the publisher
+         */
+        public String getPublisher() {
+            return publisher;
+        }
+
+        /**
+         * @param publisher the publisher to set
+         */
+        public void setPublisher(String publisher) {
+            this.publisher = publisher;
+        }
 
 }

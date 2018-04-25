@@ -9,9 +9,51 @@
 <html>
     <head>
         <style>
-            div1 {
-                align-content: center;
-            }
+        a{
+         color: blue;
+        }    
+        h2{
+        font-size: 16px;
+        font-family: Arial;
+        color: #ffffff;
+        }    
+        divCol1{
+        position: relative;
+        height: 158px;
+        bottom: -200px;
+        width: -10px;
+        background-color: #333;
+        border-radius: 10%;
+        border-color: #4CAF50;
+        }
+        divCol2{
+         position: relative;
+        height: 158px;
+        bottom: -200px;
+        width: -10px;
+        background-color: #333;
+        border-radius: 10%;
+        border-color: #4CAF50;
+        }
+        divCol3{
+        height: 120px;
+        bottom: 100px;
+        width: 200px;
+        }
+        .column {
+        float: left;
+        width: 10%;
+        text-align: center;
+        position: relative;
+        
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }   
         /* Navbar container */
         .navbar {
         overflow: hidden;
@@ -132,27 +174,36 @@
                     <a href="#">EditProfile</a>
                 </div>
             </div>
-                <a href="#home">NewPost</a>
+                <a href="">NewPost</a>
+                <a href="">BookList</a>
             <div class="topnav-right">
               <a href="#home">Logout</a>
             </div>
         </div> 
     </div>
-    <div class="container">
-        <div class="list-group-item" style="text-align: center">
-        <h2>MyPostList</h2>
-            <li><a href="#" class="list-group-item list-group-item-action">Recent</a></li>
-            <li><a href="#" class="list-group-item list-group-item-action">to</a></li>
-           <li> <a href="#" class="list-group-item list-group-item-action">Old Post</a></li>
-        
-        <h2>GeneralPostList</h2>
-        <div class="list-group">
+    <div class="list-group-item" style="text-align: center">
+        <divCol3 class="row">
+            <divCol1 class="column">
+         <ul0>
+            <h2>MyPostList</h2>
             <li><a href="#" class="list-group-item list-group-item-action">Recent</a></li>
             <li><a href="#" class="list-group-item list-group-item-action">to</a></li>
             <li><a href="#" class="list-group-item list-group-item-action">Old Post</a></li>
-        
-        </div>
-       </div>
-    </div>
+         </ul0>
+         </divCol1>
+         <divCol2 class="column">   
+         <ul1>
+         <h2>GeneralPostList</h2>
+            <li><a href="#" class="list-group-item list-group-item-action">Recent</a></li>
+            <li><a href="#" class="list-group-item list-group-item-action">to</a></li>
+            <li><a href="#" class="list-group-item list-group-item-action">Old Post</a></li>
+         </ul1>
+        </divCol2>
+        </divCol3>
+        </div> 
 </body>
 </html>
+ <div class="row">
+  <div class="column"></div>
+  <div class="column"></div>
+</div> 

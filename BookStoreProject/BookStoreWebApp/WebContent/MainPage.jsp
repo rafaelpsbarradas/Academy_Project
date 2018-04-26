@@ -38,19 +38,19 @@
         outline: none;
         color: white;
         padding: 14px 16px;
-        background-color: inherit;
+        background-color: #9aae04;
         font-family: inherit;
         margin: 0;
     }
 
     .navbar a:hover, .dropdown:hover .dropbtn {
-        background-color: red;
+        background-color: #a0b3b0;
     }
 
     .dropdown-content {
         display: none;
         position: absolute;
-        background-color: #f9f9f9;
+        background-color: #9aae04;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
@@ -66,7 +66,7 @@
     }
 
     .dropdown-content a:hover {
-        background-color: #ddd;
+        background-color: #a0b3b0;
     }
 
     .dropdown:hover .dropdown-content {
@@ -80,6 +80,7 @@
     }
     .column {
     flex: 50%;
+    text-align: center;
     }
 </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

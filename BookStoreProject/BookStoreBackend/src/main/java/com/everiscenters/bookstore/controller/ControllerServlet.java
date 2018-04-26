@@ -36,6 +36,7 @@ public class ControllerServlet extends HttpServlet {
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 
 		bookDAO = new BookDAO(jdbcURL, jdbcUsername, jdbcPassword);
+                userDAO = new UserDAO(jdbcURL, jdbcUsername, jdbcPassword);
 
 	}
 
@@ -77,10 +78,10 @@ public class ControllerServlet extends HttpServlet {
                         case "/changeProfile":
 				change(request, response);
 				break;
-                        case "/register":
+                        case "/showRegister":
 				showRegister(request, response);
 				break;
-                        case "/registerComplete":
+                        case "/register":
 				register(request, response);
 				break;
                         case "/logout":
@@ -110,11 +111,16 @@ public class ControllerServlet extends HttpServlet {
             }
 	}
         
-        private void main(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+        private void main(HttpServletRequest request, HttpServletResponse response) 	throws IOException, ServletException, SQLException {
 	    //Fazer Validações e Verificar Login
-            if(request != null && !request.getParameter("username").isEmpty() && userDAO.getUser(request.getParameter("username")) != null){
+           
+            String teste = userDAO.getUser(request.getParameter("username")).getPassword();
+            User teste1 = userDAO.getUser(request.getParameter("username"));
+            String teste2 = userDAO.getUser(request.getParameter("username")).getUsername();
+            System.err.println("" + teste + " " + teste1 + " " + teste2);
+            if(request != null && !request.getParameter("username").isEmpty() && userDAO != null && userDAO.getUser(request.getParameter("username")) != null){
                 if(!request.getParameter("password").isEmpty() &&
-                        userDAO.getUser(request.getParameter("username")).getPassword() == request.getParameter("password")) {
+                        userDAO.getUser(request.getParameter("username")).getPassword().equals(request.getParameter("password"))) {
                     //Criar Sessão
                     HttpSession session = request.getSession(); 
                     session.setAttribute("sessionUsername", request.getParameter("username"));
@@ -124,9 +130,20 @@ public class ControllerServlet extends HttpServlet {
                     dispatcher.forward(request, response);
                 } else {
                     showMessageDialog(null, "Password Errada!");
+                    //System.out.println("Password Errada!");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+                    dispatcher.forward(request, response);
                 }
             } else {
-                showMessageDialog(null, "Username Errado!");
+                //showMessageDialog(null, "Username Errado!");
+                System.out.println("Username Errado!");
+                //response.encodeRedirectURL("/login");
+                
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+                dispatcher.forward(request, response);
+               
+                
+                
             }
         }
         

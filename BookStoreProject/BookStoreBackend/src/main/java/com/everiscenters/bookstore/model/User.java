@@ -18,6 +18,9 @@ public class User {
     String lastName;
     String birthDayDate;
 
+    public User() {
+    }
+
     public User(int id) {
         this.id = id;
     }

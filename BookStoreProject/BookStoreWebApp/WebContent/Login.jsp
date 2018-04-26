@@ -21,9 +21,10 @@
             <input id="password" type="password" name="password" placeholder="Password">
             </br>
             <input type="submit" value="Sign In">
+            <input type="reset" value="Reset">
         </form>
         
-        <form method="POST" action="register">
+        <form method="POST" action="showRegister">
             <input type="submit" value="Sign Up">
         </form>
         

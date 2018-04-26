@@ -18,6 +18,7 @@ import com.everiscenters.bookstore.dao.UserDAO;
 import com.everiscenters.bookstore.model.Book;
 <<<<<<< HEAD
 import com.everiscenters.bookstore.model.User;
+import static java.lang.System.out;
 import static javax.swing.JOptionPane.showMessageDialog;
 =======
 import com.everiscenters.bookstore.model.Post;
@@ -169,17 +170,30 @@ public class ControllerServlet extends HttpServlet {
                     dispatcher.forward(request, response);
                 } else {
                     //showMessageDialog(null, "Password Errada!");
-                    System.out.println("Password Errada!");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-                    dispatcher.forward(request, response);
+                    {
+                        out.println("<script type=\"text/javascript\">");
+                        out.println("alert('Password Errada!');");
+                        out.println("location='Login.jsp';");
+                        out.println("</script>");
+}
+//                    System.out.println("Password Errada!");
+//                    RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+//                    dispatcher.forward(request, response);
                 }
             } else {
+//                out.println("<script type=\"text/javascript\">");
+//                out.println("alert('Username Errado!');");
+//                out.println("location='Login.jsp';");
+//                out.println("</script>");
+                out.println("<meta http-equiv='refresh' content='3;URL=Login.jsp'>");//redirects after 3 seconds
+                out.println("<p style='color:red;'>User incorrect!</p>");
+
                 //showMessageDialog(null, "Username Errado!");
-                System.out.println("Username Errado!");
+//                System.out.println("Username Errado!");
                 //response.encodeRedirectURL("/login");
-                
-                RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-                dispatcher.forward(request, response);
+//                
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+//                dispatcher.forward(request, response);
                
                 
                 

@@ -16,14 +16,11 @@ import com.everiscenters.bookstore.dao.BookDAO;
 import com.everiscenters.bookstore.dao.PostDAO;
 import com.everiscenters.bookstore.dao.UserDAO;
 import com.everiscenters.bookstore.model.Book;
-<<<<<<< HEAD
 import com.everiscenters.bookstore.model.User;
 import static java.lang.System.out;
 import static javax.swing.JOptionPane.showMessageDialog;
-=======
 import com.everiscenters.bookstore.model.Post;
 import com.everiscenters.bookstore.model.User;
->>>>>>> PreCaution
 
 /**
  * ControllerServlet.java
@@ -35,10 +32,7 @@ import com.everiscenters.bookstore.model.User;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BookDAO bookDAO;
-<<<<<<< HEAD
-=======
         private PostDAO postDAO;
->>>>>>> PreCaution
         private UserDAO userDAO;
 
 	public void init() {
@@ -93,11 +87,7 @@ public class ControllerServlet extends HttpServlet {
 				main(request, response);
 				break;
                         case "/listUser":
-<<<<<<< HEAD
-				//listUser(request, response);
-=======
-//				listUser(request, response);
->>>>>>> PreCaution
+                            
 				break;
                         case "/changeProfile":
 				change(request, response);
@@ -108,12 +98,6 @@ public class ControllerServlet extends HttpServlet {
                         case "/register":
 				register(request, response);
 				break;
-<<<<<<< HEAD
-=======
-                        case "/registerComplete":
-//				registerComplete(request, response);
-				break;
->>>>>>> PreCaution
                         case "/logout":
 				logout(request, response);
 				break;
@@ -162,41 +146,17 @@ public class ControllerServlet extends HttpServlet {
                     HttpSession session = request.getSession(); 
                     session.setAttribute("sessionUsername", request.getParameter("username"));
                     
-<<<<<<< HEAD
-                    //Redirect to Main Page
-=======
->>>>>>> PreCaution
                     RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     dispatcher.forward(request, response);
                 } else {
-                    //showMessageDialog(null, "Password Errada!");
-                    {
-                        out.println("<script type=\"text/javascript\">");
-                        out.println("alert('Password Errada!');");
-                        out.println("location='Login.jsp';");
-                        out.println("</script>");
-}
-//                    System.out.println("Password Errada!");
-//                    RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-//                    dispatcher.forward(request, response);
+                    System.out.println("Password Errada!");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+                    dispatcher.forward(request, response);
                 }
             } else {
-//                out.println("<script type=\"text/javascript\">");
-//                out.println("alert('Username Errado!');");
-//                out.println("location='Login.jsp';");
-//                out.println("</script>");
-                out.println("<meta http-equiv='refresh' content='3;URL=Login.jsp'>");//redirects after 3 seconds
-                out.println("<p style='color:red;'>User incorrect!</p>");
-
-                //showMessageDialog(null, "Username Errado!");
-//                System.out.println("Username Errado!");
-                //response.encodeRedirectURL("/login");
-//                
-//                RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-//                dispatcher.forward(request, response);
-               
-                
-                
+                System.out.println("Username Errado!");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+                dispatcher.forward(request, response); 
             }
         }
         
@@ -261,16 +221,12 @@ public class ControllerServlet extends HttpServlet {
                       
                     } else {
                         System.out.println("Username ou Email já utilizados");
-                        //showMessageDialog(null, "Username ou Email já utilizados");
                     }
                 } else { 
                     System.out.println("Password não estão iguais");
-                    //showMessageDialog(null, "Password não estão iguais");
                 }
             } else { 
                     System.out.println("Certifique-se que todos os campos se encontram preenchidos");
-                    //showMessageDialog(null, "Certifique-se que todos os campos se encontram preenchidos");
-                    
                     }   
 	}
         

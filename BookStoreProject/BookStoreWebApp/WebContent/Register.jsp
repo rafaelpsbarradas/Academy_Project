@@ -33,7 +33,8 @@
             <input id="second" type="text" name="second" placeholder="Last Name">
             </br>
             <label>Birthday</label>
-            <input id="birth" type="date" name="birthday" placeholder="Birthday" max="1900-01-01" min="datetime-local">
+            <input id="birth" type="date" name="birth" placeholder="Birthday" max="1900-01-01" min="datetime-local">
+            <!--<input id="birth" type="text" name="birth" placeholder="Birthday">-->
             </br>
             
             <input type="submit" value="Register">

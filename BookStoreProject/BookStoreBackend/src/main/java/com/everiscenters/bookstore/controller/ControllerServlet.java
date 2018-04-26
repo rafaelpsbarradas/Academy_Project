@@ -153,12 +153,8 @@ public class ControllerServlet extends HttpServlet {
         
         private void main(HttpServletRequest request, HttpServletResponse response) 	throws IOException, ServletException, SQLException {
 	    //Fazer Validações e Verificar Login
-           
-            String teste = userDAO.getUser(request.getParameter("username")).getPassword();
-            User teste1 = userDAO.getUser(request.getParameter("username"));
-            String teste2 = userDAO.getUser(request.getParameter("username")).getUsername();
-            System.err.println("" + teste + " " + teste1 + " " + teste2);
-            if(request != null && !request.getParameter("username").isEmpty() && userDAO != null && userDAO.getUser(request.getParameter("username")) != null){
+            if(request != null && !request.getParameter("username").isEmpty() && userDAO != null && 
+                    userDAO.getUser(request.getParameter("username")) != null){
                 if(!request.getParameter("password").isEmpty() &&
                         userDAO.getUser(request.getParameter("username")).getPassword().equals(request.getParameter("password"))) {
                     //Criar Sessão
@@ -172,8 +168,8 @@ public class ControllerServlet extends HttpServlet {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     dispatcher.forward(request, response);
                 } else {
-                    showMessageDialog(null, "Password Errada!");
-                    //System.out.println("Password Errada!");
+                    //showMessageDialog(null, "Password Errada!");
+                    System.out.println("Password Errada!");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
                     dispatcher.forward(request, response);
                 }
@@ -228,10 +224,11 @@ public class ControllerServlet extends HttpServlet {
             String email = request.getParameter("email");
             String first = request.getParameter("first");
             String second = request.getParameter("second");
-            String birth = request.getParameter("birth");
+            String birth = (String)request.getParameter("birth");
             //Verificar se nao existe dados vazios
             if(request != null && !usernameReq.isEmpty() && !password1Req.isEmpty() && !password2Req.isEmpty() &&
-                    !email.isEmpty() && !first.isEmpty() && !second.isEmpty() && !birth.isEmpty()){
+                    !email.isEmpty() && !first.isEmpty() && !second.isEmpty() && !birth.isEmpty() && usernameReq != null && password1Req != null && 
+                    password2Req != null && email != null && first != null && second != null && birth != null){
                 if(password1Req.equals(password2Req)){
                     User user = new User();
                     user.setUsername(usernameReq);

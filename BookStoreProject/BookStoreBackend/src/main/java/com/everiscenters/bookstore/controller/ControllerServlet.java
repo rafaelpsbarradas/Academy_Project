@@ -63,11 +63,26 @@ public class ControllerServlet extends HttpServlet {
                         case "/list":
 				listBook(request, response);
 				break;
+                        case "/main":
+				main(request, response);
+				break;
+                        case "/listUser":
+				listUser(request, response);
+				break;
+                        case "/changeProfile":
+				change(request, response);
+				break;
                         case "/register":
 				register(request, response);
 				break;
+                        case "/registerComplete":
+				registerComplete(request, response);
+				break;
+                        case "/logout":
+				logout(request, response);
+				break;
 			default:
-				login(request, response); //listBook(request, response);
+				login(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -76,17 +91,51 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	private void listBook(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-		//if(request != null && !request.getParameter("username").isEmpty() && UserDAO.getUser(request.getParameter("username")))){
-                  if(request != null && !request.getParameter("username").isEmpty() && UserDAO.getUser(request.getParameter("username"))){ 
-                }
-                
-                List<Book> listBook = bookDAO.listAllBooks();
-		request.setAttribute("listBook", listBook);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
-		dispatcher.forward(request, response);
+            
+            //Verificar Sessão
+            //SE ADMIN -> BookList.jsp
+            //SE NÃO -> MENSAGEM DE AVISO
+            
+            List<Book> listBook = bookDAO.listAllBooks();
+            request.setAttribute("listBook", listBook);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
+            dispatcher.forward(request, response);
+	}
+        
+        private void main(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+		
+            //Fazer validaçoes
+            //Verificar Login
+            //Criar Sessão
+            //SE Sim -> Main.jsp
+            //SE Nao -> Login.jsp com mensagem
+            
+            //Fazer Validações
+//            if(request != null && !request.getParameter("username").isEmpty() && UserDAO.getUser(request.getParameter("username"))){
+//                if(!request.getParameter("password") && UserDAO.getPassword(request.getParameter("password"))) {
+                    
+                    
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Main.jsp");
+                    dispatcher.forward(request, response);
+//                } 
+//            }
+        }
+        
+        private void logout(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+		
+            //remover sessão
+            //iR PARA O LOGIN
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+            dispatcher.forward(request, response);
 	}
 
          private void login(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+            dispatcher.forward(request, response);
+	}
+         
+        private void change(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -137,6 +186,6 @@ public class ControllerServlet extends HttpServlet {
 		Book book = new Book(id);
 		bookDAO.deleteBook(book);
 		response.sendRedirect("list");
-
+                    
 	}
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.*;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.everiscenters.bookstore.dao.BookDAO;
 import com.everiscenters.bookstore.dao.UserDAO;
 import com.everiscenters.bookstore.model.Book;
+import com.everiscenters.bookstore.model.User;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * ControllerServlet.java
@@ -24,6 +28,7 @@ import com.everiscenters.bookstore.model.Book;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BookDAO bookDAO;
+        private UserDAO userDAO;
 
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -67,16 +72,16 @@ public class ControllerServlet extends HttpServlet {
 				main(request, response);
 				break;
                         case "/listUser":
-				listUser(request, response);
+				//listUser(request, response);
 				break;
                         case "/changeProfile":
 				change(request, response);
 				break;
                         case "/register":
-				register(request, response);
+				showRegister(request, response);
 				break;
                         case "/registerComplete":
-				registerComplete(request, response);
+				register(request, response);
 				break;
                         case "/logout":
 				logout(request, response);
@@ -92,40 +97,47 @@ public class ControllerServlet extends HttpServlet {
 
 	private void listBook(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
             
-            //Verificar Sessão
-            //SE ADMIN -> BookList.jsp
-            //SE NÃO -> MENSAGEM DE AVISO
-            
-            List<Book> listBook = bookDAO.listAllBooks();
-            request.setAttribute("listBook", listBook);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
-            dispatcher.forward(request, response);
+            //Verificar Sessão (Verificar se é admin)
+            HttpSession session=request.getSession(false);  
+            String usernameCon=(String)session.getAttribute("sessionUsername");  
+            if(usernameCon.equals("rafael")){
+                List<Book> listBook = bookDAO.listAllBooks();
+                request.setAttribute("listBook", listBook);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                showMessageDialog(null, "Não tem permissões para aceder a esta página!");
+            }
 	}
         
         private void main(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-		
-            //Fazer validaçoes
-            //Verificar Login
-            //Criar Sessão
-            //SE Sim -> Main.jsp
-            //SE Nao -> Login.jsp com mensagem
-            
-            //Fazer Validações
-//            if(request != null && !request.getParameter("username").isEmpty() && UserDAO.getUser(request.getParameter("username"))){
-//                if(!request.getParameter("password") && UserDAO.getPassword(request.getParameter("password"))) {
+	    //Fazer Validações e Verificar Login
+            if(request != null && !request.getParameter("username").isEmpty() && userDAO.getUser(request.getParameter("username")) != null){
+                if(!request.getParameter("password").isEmpty() &&
+                        userDAO.getUser(request.getParameter("username")).getPassword() == request.getParameter("password")) {
+                    //Criar Sessão
+                    HttpSession session = request.getSession(); 
+                    session.setAttribute("sessionUsername", request.getParameter("username"));
                     
-                    
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Main.jsp");
+                    //Redirect to Main Page
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     dispatcher.forward(request, response);
-//                } 
-//            }
+                } else {
+                    showMessageDialog(null, "Password Errada!");
+                }
+            } else {
+                showMessageDialog(null, "Username Errado!");
+            }
         }
         
         private void logout(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-		
             //remover sessão
-            //iR PARA O LOGIN
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
             
+            //Redirect to Login
             RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
             dispatcher.forward(request, response);
 	}
@@ -136,13 +148,56 @@ public class ControllerServlet extends HttpServlet {
 	}
          
         private void change(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-		dispatcher.forward(request, response);
+            //Verificar sessao
+            //Buscar dados da sessão
+            //modificar dados da função
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+            dispatcher.forward(request, response);
 	}
          
-        private void register(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
-		dispatcher.forward(request, response);
+        private void register(HttpServletRequest request, HttpServletResponse response) 	throws IOException, ServletException, SQLException {
+            //Validar dados
+            //SE TIVER SUCESSO
+                //enviar para base de dados
+            //SE TIVER ERRADO
+                //mensagem de aviso
+            
+            String usernameReq = request.getParameter("username");
+            String password1Req = request.getParameter("password1");
+            String password2Req = request.getParameter("password2");
+            String email = request.getParameter("email");
+            String first = request.getParameter("first");
+            String second = request.getParameter("second");
+            String birth = request.getParameter("birth");
+            //Verificar se nao existe dados vazios
+            if(request != null && !usernameReq.isEmpty() && !password1Req.isEmpty() && !password2Req.isEmpty() &&
+                    !email.isEmpty() && !first.isEmpty() && !second.isEmpty() && !birth.isEmpty()){
+                if(password1Req.equals(password2Req)){
+                    User user = new User();
+                    user.setUsername(usernameReq);
+                    user.setPassword(password1Req);
+                    user.setEmail(email);
+                    user.setFirstName(first);
+                    user.setLastName(second);
+                    user.setBirthdayDate(birth);
+                    
+                    if(userDAO.getUser(user.getUsername()) == null && userDAO.getUser(user.getEmail()) == null){
+                       
+                            userDAO.insertUser(user);
+                            
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+                            dispatcher.forward(request, response);
+                      
+                    } else {
+                        showMessageDialog(null, "Username ou Email já utilizados");
+                    }
+                } else { showMessageDialog(null, "Password não estão iguais");}
+            } else { showMessageDialog(null, "Certifique-se que todos os campos se encontram preenchidos");}      
+	}
+        
+        private void showRegister(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
+            dispatcher.forward(request, response);
 	}
         
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {

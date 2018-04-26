@@ -221,13 +221,19 @@ public class ControllerServlet extends HttpServlet {
                       
                     } else {
                         System.out.println("Username ou Email já utilizados");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
+                        dispatcher.forward(request, response);
                     }
                 } else { 
                     System.out.println("Password não estão iguais");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
+                    dispatcher.forward(request, response);
                 }
             } else { 
                     System.out.println("Certifique-se que todos os campos se encontram preenchidos");
-                    }   
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
+                    dispatcher.forward(request, response);
+                }   
 	}
         
         private void showRegister(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {

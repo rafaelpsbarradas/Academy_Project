@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Books Store Application</title>
+<title>MainPage</title>
     <head>
         <style>
         .footer {
@@ -84,24 +84,27 @@
     }
 </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>MainPage</title>
 </head>
     <body>
-        <header><img src="https://www.everis.com/sites/all/themes/everis/logo.png"
-			alt="logo" /></header>
+        <center>
+		<img src="https://www.everis.com/sites/all/themes/everis/logo.png"
+			alt="logo" />
+	</center>
         <div class="navbar">
             <div class="dropdown">
                 <button class="dropbtn">Username(meternome)
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="#">EditProfile</a>
+                    <a href="Register.jsp">EditProfile</a>
                 </div>
             </div>
-                <a href="">NewPost</a>
+                <a href="newpost">NewPost</a>
                 <a href="list">BookList</a>
+                <a href="postlist">PostList</a>
             <div class="topnav-right">
-              <a href="">Logout</a>
+                <a href="Login.jsp">Logout</a>
             </div>
         </div>
         <div align="center">

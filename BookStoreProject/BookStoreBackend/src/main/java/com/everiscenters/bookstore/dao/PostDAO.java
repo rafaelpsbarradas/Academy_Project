@@ -7,13 +7,17 @@ package com.everiscenters.bookstore.dao;
 
 import com.everiscenters.bookstore.model.Book;
 import com.everiscenters.bookstore.model.Post;
+import com.everiscenters.bookstore.model.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,12 +54,17 @@ public class PostDAO {
                     jdbcConnection.close();
             }
     }
-    public boolean insertPost(Post post) throws SQLException {
-		String sql = "INSERT INTO posts (title) VALUES (?)";
+    public boolean insertPost(Post post,Book book,User user) throws SQLException {
+		String sql = "INSERT INTO posts (date, FK_user, FK_book, title, description) VALUES (?,?,?,?,?)";
 		connect();
-		
+                Calendar calendar = Calendar.getInstance();
+                java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-		statement.setString(1, post.getTitle());
+		statement.setDate(1, date);
+                statement.setInt(2, book.getId());
+                statement.setInt(3, user.getUserId());
+                statement.setString(4, post.getTitle());
+                statement.setString(5, post.getDescription());
                 
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();

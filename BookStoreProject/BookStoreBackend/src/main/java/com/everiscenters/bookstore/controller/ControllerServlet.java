@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.everiscenters.bookstore.dao.BookDAO;
+import com.everiscenters.bookstore.dao.PostDAO;
 import com.everiscenters.bookstore.dao.UserDAO;
 import com.everiscenters.bookstore.model.Book;
+import com.everiscenters.bookstore.model.Post;
+import com.everiscenters.bookstore.model.User;
 
 /**
  * ControllerServlet.java
@@ -24,6 +27,8 @@ import com.everiscenters.bookstore.model.Book;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BookDAO bookDAO;
+        private PostDAO postDAO;
+        private UserDAO userDAO;
 
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -45,11 +50,17 @@ public class ControllerServlet extends HttpServlet {
 
 		try {
 			switch (action) {
-			case "/new":
-				showNewForm(request, response);
+			case "/newbook":
+				showNewBookForm(request, response);
 				break;
-			case "/insert":
+                        case "/newpost":
+				showNewPostForm(request, response);
+				break;
+			case "/insertbook":
 				insertBook(request, response);
+				break;
+                        case "/insertpost":
+				insertPost(request, response);
 				break;
 			case "/delete":
 				deleteBook(request, response);
@@ -60,14 +71,17 @@ public class ControllerServlet extends HttpServlet {
 			case "/update":
 				updateBook(request, response);
 				break;
-                        case "/list":
+                        case "/booklist":
 				listBook(request, response);
+				break;
+                        case "/postlist":
+				listPost(request, response);
 				break;
                         case "/main":
 				main(request, response);
 				break;
                         case "/listUser":
-				listUser(request, response);
+//				listUser(request, response);
 				break;
                         case "/changeProfile":
 				change(request, response);
@@ -76,7 +90,7 @@ public class ControllerServlet extends HttpServlet {
 				register(request, response);
 				break;
                         case "/registerComplete":
-				registerComplete(request, response);
+//				registerComplete(request, response);
 				break;
                         case "/logout":
 				logout(request, response);
@@ -101,6 +115,17 @@ public class ControllerServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
             dispatcher.forward(request, response);
 	}
+        private void listPost(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+            
+            //Verificar Sessão
+            //SE ADMIN -> BookList.jsp
+            //SE NÃO -> MENSAGEM DE AVISO
+            
+            List<Book> listBook = bookDAO.listAllBooks();
+            request.setAttribute("listBook", listBook);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
+            dispatcher.forward(request, response);
+	}
         
         private void main(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
 		
@@ -115,7 +140,7 @@ public class ControllerServlet extends HttpServlet {
 //                if(!request.getParameter("password") && UserDAO.getPassword(request.getParameter("password"))) {
                     
                     
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Main.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     dispatcher.forward(request, response);
 //                } 
 //            }
@@ -145,8 +170,14 @@ public class ControllerServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
         
-	private void showNewForm(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("BookForm.jsp");
+	private void showNewBookForm(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+            
+                RequestDispatcher dispatcher = request.getRequestDispatcher("BookForm.jsp");
+		dispatcher.forward(request, response);
+	}
+        private void showNewPostForm(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+            
+                RequestDispatcher dispatcher = request.getRequestDispatcher("PostForm.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -166,6 +197,17 @@ public class ControllerServlet extends HttpServlet {
 
 		Book newBook = new Book(title, author, price);
 		bookDAO.insertBook(newBook);
+		response.sendRedirect("list");
+	}
+        private void insertPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		String title = request.getParameter("title");
+		int id = Integer.parseInt(request.getParameter("bookid"));
+		String description = request.getParameter("description");
+                
+                Book book = new Book(id);
+                User user = new User(id);
+		Post post = new Post(title, description);
+		postDAO.insertPost(post, book, user);
 		response.sendRedirect("list");
 	}
 

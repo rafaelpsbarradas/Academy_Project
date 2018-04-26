@@ -12,7 +12,7 @@
         <title>Login</title>
     </head>
     <body>
-        <form method="POST" action="list">
+        <form method="POST" action="main">
             <h1>LOGIN</h1>
             <label>Username</label>
             <input id="username" type="text" name="username" placeholder="Username">

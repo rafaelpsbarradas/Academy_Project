@@ -124,26 +124,25 @@ public class UserDAO {
 		disconnect();
 		return rowUpdated;		
 	}
-        public User getUser(int id) throws SQLException {
+        public User getUser(String usernameReq) throws SQLException {
 		User user = null;
-		String sql = "SELECT * FROM users WHERE id = ?";
+		String sql = "SELECT * FROM users WHERE username = ?";
 		
 		connect();
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-		statement.setInt(1, id);
+		statement.setString(1, usernameReq);
 		
 		ResultSet resultSet = statement.executeQuery();
-		
-		if (resultSet.next()) {
-                        String username = resultSet.getString("username");
-			String password = resultSet.getString("password");
-			String email = resultSet.getString("email");
-                        String firstName = resultSet.getString("first_name");
-                        String lastName = resultSet.getString("last_name");
-                        String birthDayDate = resultSet.getString("data_nascimento");
-			
-			user = new User(username, password, email, firstName, lastName, birthDayDate);
+                if (resultSet.next()) {
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
+                    String firstName = resultSet.getString("first_name");
+                    String lastName = resultSet.getString("last_name");
+                    String birthDayDate = resultSet.getString("data_nascimento");
+
+                    user = new User(username, password, email, firstName, lastName, birthDayDate);
 		}
 		
 		resultSet.close();

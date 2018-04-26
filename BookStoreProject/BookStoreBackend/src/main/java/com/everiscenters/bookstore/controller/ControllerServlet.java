@@ -246,10 +246,18 @@ public class ControllerServlet extends HttpServlet {
                             dispatcher.forward(request, response);
                       
                     } else {
-                        showMessageDialog(null, "Username ou Email já utilizados");
+                        System.out.println("Username ou Email já utilizados");
+                        //showMessageDialog(null, "Username ou Email já utilizados");
                     }
-                } else { showMessageDialog(null, "Password não estão iguais");}
-            } else { showMessageDialog(null, "Certifique-se que todos os campos se encontram preenchidos");}      
+                } else { 
+                    System.out.println("Password não estão iguais");
+                    //showMessageDialog(null, "Password não estão iguais");
+                }
+            } else { 
+                    System.out.println("Certifique-se que todos os campos se encontram preenchidos");
+                    //showMessageDialog(null, "Certifique-se que todos os campos se encontram preenchidos");
+                    
+                    }   
 	}
         
         private void showRegister(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {

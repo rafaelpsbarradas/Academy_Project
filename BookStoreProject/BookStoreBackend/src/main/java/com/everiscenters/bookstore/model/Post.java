@@ -13,13 +13,20 @@ import java.util.Date;
  */
 public class Post {
     int idPost;
+    String title;
+    Date date;
+    String description;
+
 
     public Post(int idPost) {
         this.idPost = idPost;
     }
-    String title;
-    Date date;
 
+    public Post(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+    
     public Post(String title, Date date) {
         this.title = title;
         this.date = date;
@@ -49,6 +56,13 @@ public class Post {
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

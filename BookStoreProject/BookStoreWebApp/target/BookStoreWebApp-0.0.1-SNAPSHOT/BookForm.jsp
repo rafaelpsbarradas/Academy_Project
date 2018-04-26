@@ -30,7 +30,7 @@
 			<form action="update" method="post">
 		</c:if>
 		<c:if test="${book == null}">
-			<form action="insert" method="post">
+			<form action="insertbook" method="post">
 		</c:if>
 		<table border="1" cellpadding="5">
 			<caption>

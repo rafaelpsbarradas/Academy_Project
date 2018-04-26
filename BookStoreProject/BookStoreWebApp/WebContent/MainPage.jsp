@@ -99,7 +99,7 @@
                 </div>
             </div>
                 <a href="">NewPost</a>
-                <a href="">BookList</a>
+                <a href="list">BookList</a>
             <div class="topnav-right">
               <a href="">Logout</a>
             </div>

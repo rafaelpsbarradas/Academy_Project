@@ -45,6 +45,6 @@
         </div>
     </body>
     <div class="footer">
-	<p>@ Copyright 2018 everis group</p>
+	<p>&copy: Copyright 2018 everis group</p>
     </div>
 </html>

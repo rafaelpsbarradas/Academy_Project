@@ -113,7 +113,7 @@ public class ControllerServlet extends HttpServlet {
             //Verificar Sessão (Verificar se é admin)
             HttpSession session=request.getSession(false);  
             String usernameCon=(String)session.getAttribute("sessionUsername");  
-            if(usernameCon.equals("rafael")){
+            if(usernameCon.equals("rafael") || usernameCon.equals("fernando")){
                 List<Book> listBook = bookDAO.listAllBooks();
                 request.setAttribute("listBook", listBook);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");

@@ -99,10 +99,10 @@
         </div>
 	<div align="center">	
 		<c:if test="${post != null}">
-			<form action="update" method="post">
+                    <form action="update" method="post">
 		</c:if>
 		<c:if test="${post == null}">
-			<form action="insert" method="post">
+			<form action="insertpost" method="post">
 		</c:if>
 		<table border="1" cellpadding="5">
 			<caption>

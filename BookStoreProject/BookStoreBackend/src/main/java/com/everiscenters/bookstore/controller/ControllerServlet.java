@@ -96,13 +96,9 @@ public class ControllerServlet extends HttpServlet {
 				main(request, response);
 				break;
                         case "/listUser":
-                            
 				break;
-
 				//listUser(request, response);
-
 //				listUser(request, response);
-				break;
                         case "/changeProfile":
 				change(request, response);
 				break;
@@ -112,8 +108,6 @@ public class ControllerServlet extends HttpServlet {
                         case "/register":
 				register(request, response);
 				break;
-                        case "/logout":
-
                         case "/registerComplete":
 //				registerComplete(request, response);
 				break;
@@ -138,10 +132,6 @@ public class ControllerServlet extends HttpServlet {
                 List<Book> listBook = bookDAO.listAllBooks();
                 request.setAttribute("listBook", listBook);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
-            if(usernameCon.equals("luis")){
-                request.setAttribute("listBook", postDAO.listAllPosts());
-                RequestDispatcher dispatcher = request.getRequestDispatcher("PostList.jsp");
-                dispatcher.forward(request, response);
             } else {
                 showMessageDialog(null, "Não tem permissões para aceder a esta página!");
             }
@@ -167,8 +157,6 @@ public class ControllerServlet extends HttpServlet {
                     //Criar Sessão
                     HttpSession session = request.getSession(); 
                     session.setAttribute("sessionUsername", request.getParameter("username"));
-                    
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     //Redirect to Main Page
                     RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     dispatcher.forward(request, response);

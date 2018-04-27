@@ -22,7 +22,7 @@
 			alt="logo" />
 		<h1>Books Management</h1>
 		<h2>
-			<a href="new">Add New Book</a> &nbsp;&nbsp;&nbsp; <a href="list">List
+			<a href="newbook">Add New Book</a> &nbsp;&nbsp;&nbsp; <a href="booklist">List
 				All Books</a>
 
 		</h2>

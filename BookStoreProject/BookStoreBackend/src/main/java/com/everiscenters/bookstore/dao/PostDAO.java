@@ -82,11 +82,11 @@ public class PostDAO {
 		ResultSet resultSet = statement.executeQuery(sql);
 		
 		while (resultSet.next()) {
-			int id = resultSet.getInt("idpost");
-			Date date = resultSet.getDate("date");
 			String title = resultSet.getString("title");
+			Date date = resultSet.getDate("date");
+                        String description = resultSet.getString("description");
                         
-			Post post = new Post(id, date, title);
+			Post post = new Post(title, description, date);
 			listPost.add(post);
 		}
 		
@@ -123,6 +123,7 @@ public class PostDAO {
 		disconnect();
 		return rowUpdated;		
 	}
+       
         public Post getPost(int id) throws SQLException {
 		Post post = null;
 		String sql = "SELECT * FROM posts WHERE idpost = ?";
@@ -138,7 +139,7 @@ public class PostDAO {
 			String title = resultSet.getString("title");
                         Date date = resultSet.getDate("date");
 			
-			//post = new Post(title,date);
+			post = new Post(title,date);
 		}
 		
 		resultSet.close();

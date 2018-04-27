@@ -12,12 +12,18 @@ import java.util.Date;
  * @author fvitordu
  */
 public class Post {
-    int idPost;
-    String title;
-    Date date;
-    String description;
+    private int idPost;
+    private String title;
+    private Date date;
+    private String description;
 
+    public Post(String title, String description, Date date) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+    }
 
+    
     public Post(int idPost) {
         this.idPost = idPost;
     }

@@ -12,9 +12,9 @@ import java.util.Date;
  * @author fvitordu
  */
 public class Comment extends Post{
-    int id;
-    String textComment;
-    Date commentDate;
+    private int id;
+    private String textComment;
+    private Date commentDate;
 
     public Comment(int idPost) {
         super(idPost);
@@ -36,12 +36,12 @@ public class Comment extends Post{
         this.textComment = textComment;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getcommentDate() {
+        return commentDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setcommentDate(Date commentDate) {
+        this.commentDate = commentDate;
     }
 
 }

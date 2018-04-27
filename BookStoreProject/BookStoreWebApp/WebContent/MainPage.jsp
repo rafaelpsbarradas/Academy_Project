@@ -97,12 +97,28 @@
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="Register.jsp">EditProfile</a>
+                    <a href="">EditProfile</a>
                 </div>
             </div>
-                <a href="newpost">NewPost</a>
-                <a href="booklist">BookList</a>
-                <a href="postlist">PostList</a>
+            <div class="dropdown">
+                <button class="dropbtn">Posts
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="insertpost">AddNewPost</a>
+                    <a href="postlist">MyRecentPosts</a>
+                    <a href="postlist">RecentPosts</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Books
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="newbook">AddNewBook</a>
+                    <a href="booklist">ListAllBooks</a>
+                </div>
+            </div>
             <div class="topnav-right">
                 <a href="logout">Logout</a>
             </div>

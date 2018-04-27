@@ -97,28 +97,12 @@
                 <a href="Login.jsp">Logout</a>
             </div>
         </div>
-
-	<div align="center">	
-		<c:if test="${post != null}">
-                    <form action="update" method="post">
-		</c:if>
-
-	<div align="center">
-
-		<c:if test="${post == null}">
+            <div align="center">
 			<form action="insertpost" method="post">
-		</c:if>
 		<table border="1" cellpadding="5">
 			<caption>
-				<h2>
-                                    <c:if test="${post == null}">
-                                        Add New Post
-                                    </c:if>
-                                        </h2>
+				<h2>  Add New Post</h2>
                                 </caption>
-                                <c:if test="${post != null}">
-                                        <input type="hidden" name="id" value="<c:out value='${post.id}' />" />
-                                </c:if>
                                 <tr>
                                         <th>Title:</th>
                                         <td><input type="text" name="title" size="" required="true"
@@ -132,7 +116,7 @@
                                 <tr>
                                         <th>Description:</th>
                                         <td><input type="text" name="description" size=""
-                                                value="<c:out value='${post.price}' />" /></td>
+                                                value="<c:out value='${post.description}' />" /></td>
                                 </tr>
                                 <tr>
                                         <td colspan="2" align="center"><input type="submit"

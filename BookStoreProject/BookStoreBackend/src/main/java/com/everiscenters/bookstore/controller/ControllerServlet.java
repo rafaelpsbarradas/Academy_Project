@@ -40,6 +40,7 @@ public class ControllerServlet extends HttpServlet {
 
 		bookDAO = new BookDAO(jdbcURL, jdbcUsername, jdbcPassword);
                 userDAO = new UserDAO(jdbcURL, jdbcUsername, jdbcPassword);
+                postDAO = new PostDAO(jdbcURL, jdbcUsername, jdbcPassword);
 
 	}
 
@@ -273,12 +274,13 @@ public class ControllerServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		int id = Integer.parseInt(request.getParameter("bookid"));
 		String description = request.getParameter("description");
-                int userid = userDAO.getUser(request.getParameter("username")).getUserId();
                 
-                Book book = new Book(id);
-                User user = new User(userid);
-		Post post = new Post(title, description);
-		postDAO.insertPost(post, book, user);
+                HttpSession session=request.getSession(false);  
+                String usernameCon = (String)session.getAttribute("sessionUsername"); 
+                
+                int userid = userDAO.getUser(usernameCon).getUserId();
+            
+		postDAO.insertPost(title, description, id, userid);
 		response.sendRedirect("newpost");
 	}
 

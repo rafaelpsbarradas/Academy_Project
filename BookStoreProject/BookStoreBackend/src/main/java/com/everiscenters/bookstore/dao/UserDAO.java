@@ -135,6 +135,7 @@ public class UserDAO {
 		
 		ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
+                    int userid = resultSet.getInt("id");
                     String username = resultSet.getString("username");
                     String password = resultSet.getString("password");
                     String email = resultSet.getString("email");
@@ -142,7 +143,7 @@ public class UserDAO {
                     String lastName = resultSet.getString("last_name");
                     String birthDayDate = resultSet.getString("data_nascimento");
 
-                    user = new User(username, password, email, firstName, lastName, birthDayDate);
+                    user = new User(userid, username, password, email, firstName, lastName, birthDayDate);
 		}
 		
 		resultSet.close();

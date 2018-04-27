@@ -33,6 +33,16 @@ public class User {
         this.lastName = lastName;
         this.birthDayDate = birthDayDate;
     }
+
+    public User(int userid, String username, String password, String email, String firstName, String lastName, String birthDayDate) {
+        this.id = userid;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDayDate = birthDayDate;
+    }
     public int getUserId() {
         return id;
     }

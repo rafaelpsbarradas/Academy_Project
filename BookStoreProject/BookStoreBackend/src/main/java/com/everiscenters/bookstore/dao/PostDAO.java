@@ -54,17 +54,17 @@ public class PostDAO {
                     jdbcConnection.close();
             }
     }
-    public boolean insertPost(Post post,Book book,User user) throws SQLException {
+    public boolean insertPost(String title, String description, int bookid, int userid) throws SQLException {
 		String sql = "INSERT INTO posts (date, FK_user, FK_book, title, description) VALUES (?,?,?,?,?)";
 		connect();
                 Calendar calendar = Calendar.getInstance();
                 java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setDate(1, date);
-                statement.setInt(2, book.getId());
-                statement.setInt(3, user.getUserId());
-                statement.setString(4, post.getTitle());
-                statement.setString(5, post.getDescription());
+                statement.setInt(2, userid);
+                statement.setInt(3, bookid);
+                statement.setString(4, title);
+                statement.setString(5, description);
                 
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();

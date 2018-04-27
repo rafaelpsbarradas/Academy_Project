@@ -104,7 +104,7 @@
                 <a href="booklist">BookList</a>
                 <a href="postlist">PostList</a>
             <div class="topnav-right">
-                <a href="Login.jsp">Logout</a>
+                <a href="logout">Logout</a>
             </div>
         </div>
         <div align="center">

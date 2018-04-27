@@ -98,24 +98,24 @@
             </div>
         </div>
 	<div align="center">	
-		<c:if test="${book != null}">
+		<c:if test="${post != null}">
 			<form action="update" method="post">
 		</c:if>
-		<c:if test="${book == null}">
+		<c:if test="${post == null}">
 			<form action="insert" method="post">
 		</c:if>
 		<table border="1" cellpadding="5">
 			<caption>
 				<h2>
-					<c:if test="${book != null}">
+					<c:if test="${post != null}">
             			Edit Book
             		</c:if>
-					<c:if test="${book == null}">
+					<c:if test="${post == null}">
             			Add New Post
             		</c:if>
 				</h2>
 			</caption>
-			<c:if test="${book != null}">
+			<c:if test="${post != null}">
 				<input type="hidden" name="id" value="<c:out value='${post.id}' />" />
 			</c:if>
 			<tr>
@@ -131,7 +131,7 @@
 			<tr>
 				<th>Description:</th>
 				<td><input type="text" name="description" size=""
-					value="<c:out value='${book.price}' />" /></td>
+					value="<c:out value='${post.price}' />" /></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><input type="submit"

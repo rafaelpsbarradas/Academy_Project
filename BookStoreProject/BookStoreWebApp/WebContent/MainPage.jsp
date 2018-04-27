@@ -101,7 +101,7 @@
                 </div>
             </div>
                 <a href="newpost">NewPost</a>
-                <a href="list">BookList</a>
+                <a href="booklist">BookList</a>
                 <a href="postlist">PostList</a>
             <div class="topnav-right">
                 <a href="Login.jsp">Logout</a>

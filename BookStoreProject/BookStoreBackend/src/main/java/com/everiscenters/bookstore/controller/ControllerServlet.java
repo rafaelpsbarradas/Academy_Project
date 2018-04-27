@@ -16,8 +16,6 @@ import com.everiscenters.bookstore.dao.BookDAO;
 import com.everiscenters.bookstore.dao.PostDAO;
 import com.everiscenters.bookstore.dao.UserDAO;
 import com.everiscenters.bookstore.model.Book;
-import com.everiscenters.bookstore.model.User;
-import static java.lang.System.out;
 import static javax.swing.JOptionPane.showMessageDialog;
 import com.everiscenters.bookstore.model.Post;
 import com.everiscenters.bookstore.model.User;
@@ -132,7 +130,7 @@ public class ControllerServlet extends HttpServlet {
             
             List<Book> listBook = bookDAO.listAllBooks();
             request.setAttribute("listBook", listBook);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("PostList.jsp");
             dispatcher.forward(request, response);
 	}
         
@@ -230,8 +228,9 @@ public class ControllerServlet extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
             } else { 
-                    System.out.println("Certifique-se que todos os campos se encontram preenchidos");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
+                    dispatcher.forward(request, response);
+                    System.out.println("Certifique-se que todos os campos se encontram preenchidos");
                     dispatcher.forward(request, response);
                 }   
 	}
@@ -265,21 +264,22 @@ public class ControllerServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
 		float price = Float.parseFloat(request.getParameter("price"));
-
+                
 		Book newBook = new Book(title, author, price);
 		bookDAO.insertBook(newBook);
-		response.sendRedirect("list");
+		response.sendRedirect("booklist");
 	}
         private void insertPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String title = request.getParameter("title");
 		int id = Integer.parseInt(request.getParameter("bookid"));
 		String description = request.getParameter("description");
+                int userid = userDAO.getUser(request.getParameter("username")).getUserId();
                 
                 Book book = new Book(id);
-                User user = new User(id);
+                User user = new User(userid);
 		Post post = new Post(title, description);
 		postDAO.insertPost(post, book, user);
-		response.sendRedirect("list");
+		response.sendRedirect("newpost");
 	}
 
 	private void updateBook(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {

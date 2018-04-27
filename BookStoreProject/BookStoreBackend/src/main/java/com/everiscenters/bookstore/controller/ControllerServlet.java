@@ -16,6 +16,16 @@ import com.everiscenters.bookstore.dao.BookDAO;
 import com.everiscenters.bookstore.dao.PostDAO;
 import com.everiscenters.bookstore.dao.UserDAO;
 import com.everiscenters.bookstore.model.Book;
+
+import com.everiscenters.bookstore.model.User;
+import static java.lang.System.out;
+
+import static javax.swing.JOptionPane.showMessageDialog;
+import com.everiscenters.bookstore.model.Post;
+import com.everiscenters.bookstore.model.User;
+
+import com.everiscenters.bookstore.model.User;
+import static java.lang.System.out;
 import static javax.swing.JOptionPane.showMessageDialog;
 import com.everiscenters.bookstore.model.Post;
 import com.everiscenters.bookstore.model.User;
@@ -88,6 +98,11 @@ public class ControllerServlet extends HttpServlet {
                         case "/listUser":
                             
 				break;
+
+				//listUser(request, response);
+
+//				listUser(request, response);
+				break;
                         case "/changeProfile":
 				change(request, response);
 				break;
@@ -96,6 +111,11 @@ public class ControllerServlet extends HttpServlet {
 				break;
                         case "/register":
 				register(request, response);
+				break;
+                        case "/logout":
+
+                        case "/registerComplete":
+//				registerComplete(request, response);
 				break;
                         case "/logout":
 				logout(request, response);
@@ -118,6 +138,9 @@ public class ControllerServlet extends HttpServlet {
                 List<Book> listBook = bookDAO.listAllBooks();
                 request.setAttribute("listBook", listBook);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
+            if(usernameCon.equals("luis")){
+                request.setAttribute("listBook", postDAO.listAllPosts());
+                RequestDispatcher dispatcher = request.getRequestDispatcher("PostList.jsp");
                 dispatcher.forward(request, response);
             } else {
                 showMessageDialog(null, "Não tem permissões para aceder a esta página!");
@@ -145,6 +168,8 @@ public class ControllerServlet extends HttpServlet {
                     HttpSession session = request.getSession(); 
                     session.setAttribute("sessionUsername", request.getParameter("username"));
                     
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
+                    //Redirect to Main Page
                     RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     dispatcher.forward(request, response);
                 } else {

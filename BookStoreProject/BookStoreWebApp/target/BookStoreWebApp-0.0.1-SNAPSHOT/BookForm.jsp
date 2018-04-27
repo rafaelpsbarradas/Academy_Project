@@ -22,13 +22,13 @@
 			alt="logo" />
 		<h1>Books Management</h1>
 		<h2>
-			<a href="new">Add New Book</a> &nbsp;&nbsp;&nbsp; <a href="list">List All Books</a>
+			<a href="newbook">Add New Book</a> &nbsp;&nbsp;&nbsp; <a href="booklist">List All Books</a>
 		</h2>
 	</center>
 	<div align="center">	
 		<c:if test="${book != null}">
 			<form action="update" method="post">
-		</c:if>
+                </c:if>
 		<c:if test="${book == null}">
 			<form action="insertbook" method="post">
 		</c:if>
@@ -44,7 +44,7 @@
 				</h2>
 			</caption>
 			<c:if test="${book != null}">
-				<input type="hidden" name="id" value="<c:out value='${book.id}' />" />
+                            <input type="hidden" name="id" value="<c:out value='${book.id}' />" />
 			</c:if>
 			<tr>
 				<th>Title:</th>
@@ -69,7 +69,7 @@
 		</form>
 	</div>
 	<div class="footer">
-		<p>@ Copyright 2018 everis group</p>
+		<p>&copy; Copyright 2018 everis group</p>
 	</div>
 </body>
 </html>

@@ -50,7 +50,7 @@ public class BookDAO {
 	}
 	
 	public boolean insertBook(Book book) throws SQLException {
-		String sql = "INSERT INTO book (title, author, price) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO book (book_id, title, author, price, publish_year, publisher) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		connect();
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
@@ -67,7 +67,7 @@ public class BookDAO {
 	}
 	
 	public List<Book> listAllBooks() throws SQLException {
-		List<Book> listBook = new ArrayList<>();
+		List<Book> listBook = new ArrayList<Book>();
 		
 		String sql = "SELECT * FROM book";
 		
@@ -84,7 +84,7 @@ public class BookDAO {
                         int publishYear = resultSet.getInt("publish_year");
                         String publisher = resultSet.getString("publisher");
 			
-			Book book = new Book(id,title,author,price,publishYear, publisher);
+			Book book = new Book(id, title, author, price, publishYear, publisher);
 			listBook.add(book);
 		}
 		

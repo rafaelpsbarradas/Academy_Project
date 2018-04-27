@@ -5,6 +5,7 @@
  */
 package com.everiscenters.bookstore.model;
 
+import java.sql.SQLType;
 import java.util.Date;
 
 /**
@@ -15,16 +16,20 @@ public class Comment extends Post{
     private int id;
     private String textComment;
     private Date commentDate;
-
+    
+    public Comment() {
+        super();
+    }
+    
     public Comment(int idPost) {
         super(idPost);
     }
 
-    public int getCommentId() {
+    public int getId() {
         return id;
     }
 
-    public void setCommentId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

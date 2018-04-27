@@ -105,8 +105,8 @@
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="insertpost">AddNewPost</a>
-                    <a href="postlist">MyRecentPosts</a>
+                    <a href="newpost">AddNewPost</a>
+                    <a href="booklist">MyRecentPosts</a>
                     <a href="postlist">RecentPosts</a>
                 </div>
             </div>

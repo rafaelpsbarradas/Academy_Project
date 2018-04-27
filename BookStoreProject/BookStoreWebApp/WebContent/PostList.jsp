@@ -24,11 +24,12 @@
         </style>  
     </head>  
 <body>
-    <center>  
+    <center>
+        <div>
             <img src="https://www.everis.com/sites/all/themes/everis/logo.png"  
                     alt="logo" />  
-            <h1>PostList</h1> 
-        </div>  
+            <h1>PostList</h1>
+        </div>
     <div>  
             <table border="1" cellpadding="5">  
                 <caption>  
@@ -52,6 +53,6 @@
     </center>  
 </body>
 <div class="footer">
-	<p>&copy:  Copyright 2018 everis group</p>
+	<p>&copy;  Copyright 2018 everis group</p>
     </div>
 </html>

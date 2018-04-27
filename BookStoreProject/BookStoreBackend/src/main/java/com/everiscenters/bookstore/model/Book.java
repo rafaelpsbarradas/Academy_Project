@@ -9,10 +9,10 @@ package com.everiscenters.bookstore.model;
  */
 public class Book {
 
-	protected int id;
-	protected String title;
-	protected String author;
-	protected float price;
+	private int id;
+	private String title;
+	private String author;
+	private float price;
         private int publishYear;
         private String publisher;
         

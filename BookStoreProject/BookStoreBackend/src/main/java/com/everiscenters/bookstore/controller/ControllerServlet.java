@@ -3,6 +3,8 @@ package com.everiscenters.bookstore.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.*;
 
@@ -29,6 +31,7 @@ import static java.lang.System.out;
 import static javax.swing.JOptionPane.showMessageDialog;
 import com.everiscenters.bookstore.model.Post;
 import com.everiscenters.bookstore.model.User;
+
 
 /**
  * ControllerServlet.java
@@ -280,11 +283,14 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	private void insertBook(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+                int book_id = Integer.parseInt(request.getParameter("id"));
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
+                int publisher_year = Integer.parseInt(request.getParameter("publisherYear"));
 		float price = Float.parseFloat(request.getParameter("price"));
-                
-		Book newBook = new Book(title, author, price);
+                String publisher = request.getParameter("publisher");
+                //usar parâmetros aqui
+		Book newBook = new Book(book_id, title, author, price, publisher_year, publisher);
 		bookDAO.insertBook(newBook);
 		response.sendRedirect("booklist");
 	}

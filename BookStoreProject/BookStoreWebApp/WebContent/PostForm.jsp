@@ -91,7 +91,7 @@
 	</center>
 <div class="navbar">    
                 <a href="main">MainPage</a>
-                <a href="list">BookList</a>
+                <a href="booklist">BookList</a>
                 <a href="postlist">PostList</a>
             <div class="topnav-right">
                 <a href="logout">Logout</a>
@@ -101,7 +101,7 @@
 			<form action="insertpost" method="post">
 		<table border="1" cellpadding="5">
 			<caption>
-				<h2>  Add New Post</h2>
+				<h2>Add New Post</h2>
                                 </caption>
                                 <tr>
                                         <th>Title:</th>
@@ -126,7 +126,7 @@
 		</form>
 	</div>
 	<div class="footer">
-		<p>&copy: Copyright 2018 everis group</p>
+		<p>&copy; Copyright 2018 everis group</p>
 	</div>
 </body>
 </html>

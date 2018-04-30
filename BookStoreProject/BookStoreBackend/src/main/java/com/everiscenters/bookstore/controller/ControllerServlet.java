@@ -36,7 +36,8 @@ import com.everiscenters.bookstore.model.User;
 /**
  * ControllerServlet.java
  * 
- * This servlet acts as a page controller for the application, handling all requests from the user.
+ * Este servlet actua como um controlador de página para a aplicação, processando todos os pedidos HTTP
+ * provenientes da máquina do(a) utilizador(a).
  *
  *  @author Copyright 2018 everis group
  */
@@ -45,7 +46,9 @@ public class ControllerServlet extends HttpServlet {
 	private BookDAO bookDAO;
         private PostDAO postDAO;
         private UserDAO userDAO;
-
+        /** Método de inicialização da instância; atenção, não é suposto ser método de classe, mas apenas um método
+         *  cuja invocação é da máxima prioridade quando comparado com os restantes métodos de instância.
+            */
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
 		String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
@@ -56,12 +59,28 @@ public class ControllerServlet extends HttpServlet {
                 postDAO = new PostDAO(jdbcURL, jdbcUsername, jdbcPassword);
 
 	}
-
+        
+        /** Método que invoca doGet com os respectivos compatíveis parâmetros, invocação essa
+         *  que é resultado do despoletar de um botão do tipo "submit" num formulário.
+         *  @param request
+         *  @param response
+         * @throws ServletException
+         * @throws IOException
+         */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
+        
+        /** Método cuja invocação corresponde a um pedido HTTP, semelhante ao método de cima,
+         *  método este que trata, numa tabela de jumps (um switch), de reencaminhar para a 
+         *  página correspondente ao pedido realizado, de acordo com os parâmetros presentes
+         *  no header da camada HTTP.
+         * @param request
+         * @param response
+         * @throws ServletException
+         * @throws IOException 
+         */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getServletPath();
@@ -111,9 +130,6 @@ public class ControllerServlet extends HttpServlet {
                         case "/register":
 				register(request, response);
 				break;
-                        case "/registerComplete":
-//				registerComplete(request, response);
-				break;
                         case "/logout":
 				logout(request, response);
 				break;
@@ -125,7 +141,21 @@ public class ControllerServlet extends HttpServlet {
 			throw new ServletException(ex);
 		}
 	}
-
+        
+        /** Método a ser invocado para popular um parâmetro no header 
+         *  HTTP com uma listagem pertinente aos livros presentes na Base de Dados,
+         *  recorrendo ao método listAllBooks da classe BookDAO presente no pacote (package)
+         *  correspondente aos Objectos de Acesso a Dados.
+         *  Após preenchimento do parâmetro, redirecciona o(a) utilizador(a) para
+         *  a página de listagem de livros caso esteja autenticado(a); caso a 
+         *  autenticação não suceda, é apresentada uma caixa de mensagem informando
+         *  desse facto.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException
+         * @throws ServletException 
+         */
 	private void listBook(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
             
             //Verificar Sessão (Verificar se é admin)
@@ -140,9 +170,18 @@ public class ControllerServlet extends HttpServlet {
                 showMessageDialog(null, "Não tem permissões para aceder a esta página!");
             }
 	}
-        private void listPost(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-            
-               //Verificar Sessão (Verificar se é admin)
+        
+        /** Método a ser invocado para popular um parâmetro no header HTTP com uma listagem
+         *  pertinente aos posts realizados até à data, reencaminhando posteriormente
+         *  para a página devidamente concebida para mostrar esses dados.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException
+         * @throws ServletException 
+         */
+        private void listPost(HttpServletRequest request, HttpServletResponse response)
+                throws SQLException, IOException, ServletException {
             HttpSession session=request.getSession(false);  
             String usernameCon=(String)session.getAttribute("sessionUsername");  
             if(usernameCon.equals("rafael") || usernameCon.equals("fernando")){
@@ -155,7 +194,14 @@ public class ControllerServlet extends HttpServlet {
             }
 	}
 	
-        
+        /** Método que se destina a autenticar terceiros que constem na base de 
+         *  dados da aplicação.
+         * @param request
+         * @param response
+         * @throws IOException
+         * @throws ServletException
+         * @throws SQLException 
+         */
         private void main(HttpServletRequest request, HttpServletResponse response) 	throws IOException, ServletException, SQLException {
 	    //Fazer Validações e Verificar Login
             if(request != null && !request.getParameter("username").isEmpty() && userDAO != null && 
@@ -180,32 +226,62 @@ public class ControllerServlet extends HttpServlet {
             }
         }
         
-        private void logout(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+        /** Método que trata de efectuar o logout do(a) corrente utilizador(a) na
+         *  página correspondente para o efeito.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException
+         * @throws ServletException 
+         */
+        private void logout(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
             //remover sessão
             HttpSession session = request.getSession(false);
             if (session != null) {
                 session.invalidate();
             }
             
-            //Redirect to Login
+            //Redirecciona para a página do Login
             RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
             dispatcher.forward(request, response);
 	}
-
-         private void login(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+        
+        /** Método que redirecciona o(a) utilizador(a) para a página de Login.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException
+         * @throws ServletException 
+         */
+        private void login(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
             RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
             dispatcher.forward(request, response);
 	}
-         
-        private void change(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
-            //Verificar sessao
+        
+        /** Método que permite mudar as credenciais com que terceiros se autenticaram
+         *  perante o site da aplicação.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException
+         * @throws ServletException 
+         */
+        private void change(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+            //Verificar sessão
             //Buscar dados da sessão
-            //modificar dados da função
             RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
             dispatcher.forward(request, response);
 	}
-         
-        private void register(HttpServletRequest request, HttpServletResponse response) 	throws IOException, ServletException, SQLException {
+        
+        /** Método que possibilita a criação de um novo utilizador mediante preenchimento
+         *  de todos os campos de texto presentes no formulário da página.
+         * @param request
+         * @param response
+         * @throws IOException
+         * @throws ServletException
+         * @throws SQLException 
+         */
+        private void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {
             //Validar dados
             //SE TIVER SUCESSO
                 //enviar para base de dados
@@ -218,62 +294,94 @@ public class ControllerServlet extends HttpServlet {
             String email = request.getParameter("email");
             String first = request.getParameter("first");
             String second = request.getParameter("second");
-            String birth = (String)request.getParameter("birth");
             //Verificar se nao existe dados vazios
-            if(request != null && !usernameReq.isEmpty() && !password1Req.isEmpty() && !password2Req.isEmpty() &&
-                    !email.isEmpty() && !first.isEmpty() && !second.isEmpty() && !birth.isEmpty() && usernameReq != null && password1Req != null && 
-                    password2Req != null && email != null && first != null && second != null && birth != null){
-                if(password1Req.equals(password2Req)){
-                    User user = new User();
-                    user.setUsername(usernameReq);
-                    user.setPassword(password1Req);
-                    user.setEmail(email);
-                    user.setFirstName(first);
-                    user.setLastName(second);
-                    user.setBirthdayDate(birth);
-                    
-                    if(userDAO.getUser(user.getUsername()) == null && userDAO.getUser(user.getEmail()) == null){
-                       
-                            userDAO.insertUser(user);
-                            
-                            RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-                            dispatcher.forward(request, response);
+            if(request != null && usernameReq != null && password1Req != null && 
+                    password2Req != null && email != null && first != null && second != null) {
+                if(!usernameReq.isEmpty() && !password1Req.isEmpty() && 
+                        !password2Req.isEmpty() && !email.isEmpty() && !first.isEmpty() && !second.isEmpty()){
+                    if(password1Req.equals(password2Req)){
+                        User user = new User();
+                        user.setUsername(usernameReq);
+                        user.setPassword(password1Req);
+                        user.setEmail(email);
+                        user.setFirstName(first);
+                        user.setLastName(second);
+
+
+                        if(userDAO.getUser(user.getUsername()) == null && userDAO.getUser(user.getEmail()) == null){
+
+                                userDAO.insertUser(user);
+
+                                response.sendRedirect("login");
                       
-                    } else {
-                        System.out.println("Username ou Email já utilizados");
-                        RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
-                        dispatcher.forward(request, response);
-                    }
+                        } else {
+                            System.out.println("Username ou Email já utilizados");
+                            response.sendRedirect("register");
+                        }
                 } else { 
                     System.out.println("Password não estão iguais");
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
-                    dispatcher.forward(request, response);
+                    response.sendRedirect("register");
                 }
             } else { 
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
-                    dispatcher.forward(request, response);
                     System.out.println("Certifique-se que todos os campos se encontram preenchidos");
-                    dispatcher.forward(request, response);
-                }   
+                    response.sendRedirect("register");
+                }
+            } else { 
+                System.out.println("Certifique-se que todos os campos se encontram preenchidos");
+                //request.getRequestDispatcher("register").forward(request, response);
+                response.sendRedirect("register");
+                    
+                }
 	}
         
-        private void showRegister(HttpServletRequest request, HttpServletResponse response) 	throws SQLException, IOException, ServletException {
+        /** Método que redirecciona o(a) utilizador(a) da página actual para a 
+         *  página de registo.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException
+         * @throws ServletException 
+         */
+        private void showRegister(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
             RequestDispatcher dispatcher = request.getRequestDispatcher("Register.jsp");
             dispatcher.forward(request, response);
 	}
         
-	private void showNewBookForm(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+        /** Método que redirecciona o(a) utilizador(a) para o formulário relativo à 
+         *  adição de novos livros na Base de Dados.
+         * @param request
+         * @param response
+         * @throws ServletException
+         * @throws IOException 
+         */
+	private void showNewBookForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             
                 RequestDispatcher dispatcher = request.getRequestDispatcher("BookForm.jsp");
 		dispatcher.forward(request, response);
 	}
-        private void showNewPostForm(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+        
+        /** Método responsável por redireccionar da página actual para a página de 
+         *  adição de novos posts.
+         * @param request
+         * @param response
+         * @throws ServletException
+         * @throws IOException 
+         */
+        private void showNewPostForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             
                 RequestDispatcher dispatcher = request.getRequestDispatcher("PostForm.jsp");
 		dispatcher.forward(request, response);
 	}
-
-	private void showEditForm(HttpServletRequest request, HttpServletResponse response)	throws SQLException, ServletException, IOException {
+        
+        /** Método que redirecciona da página actual para a página que possibilita
+         *  listar e adicionar novos livros à Base de Dados.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws ServletException
+         * @throws IOException 
+         */
+	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Book existingBook = bookDAO.getBook(id);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("BookForm.jsp");
@@ -281,7 +389,15 @@ public class ControllerServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 
 	}
-
+        
+        /** Método que, após inserir novo livro na Base de Dados, redirecciona o(a)
+         *  utilizador(a) para a página sobre a qual é possível visualizar todos os
+         *  livros inseridos no sistema.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException 
+         */
 	private void insertBook(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
                 int book_id = Integer.parseInt(request.getParameter("id"));
 		String title = request.getParameter("title");
@@ -294,6 +410,14 @@ public class ControllerServlet extends HttpServlet {
 		bookDAO.insertBook(newBook);
 		response.sendRedirect("booklist");
 	}
+        
+        /** Método que permite inserir um Post na Base de Dados relativo a um livro,
+         *  posteriormente redireccionando para a página que permite adicionar novos Posts.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException 
+         */
         private void insertPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String title = request.getParameter("title");
 		int id = Integer.parseInt(request.getParameter("bookid"));
@@ -307,7 +431,14 @@ public class ControllerServlet extends HttpServlet {
 		postDAO.insertPost(title, description, id, userid);
 		response.sendRedirect("newpost");
 	}
-
+        
+        /** Método que possibilita a modificação de dados relativos a um dado
+         *  livro.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException 
+         */
 	private void updateBook(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String title = request.getParameter("title");
@@ -318,13 +449,18 @@ public class ControllerServlet extends HttpServlet {
 		bookDAO.updateBook(book);
 		response.sendRedirect("list");
 	}
-
+        
+        /** Método que apaga um livro da Base de Dados, mediante apresentação
+         *  da respectiva identificação do mesmo.
+         * @param request
+         * @param response
+         * @throws SQLException
+         * @throws IOException 
+         */
 	private void deleteBook(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-
 		Book book = new Book(id);
 		bookDAO.deleteBook(book);
 		response.sendRedirect("list");
-                    
 	}
 }

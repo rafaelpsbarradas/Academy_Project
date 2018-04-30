@@ -5,33 +5,49 @@
  */
 package com.everiscenters.bookstore.model;
 
-/**
+/** Classe que representa uma Mensagem Privada.
  *
  * @author fvitordu
  */
 public class PrivateMessage {
 
-    int id;
-    String messageText;
+    private int id;
+    private String messageText;
     
     public PrivateMessage(int id, String messageText) {
         this.id = id;
         this.messageText = messageText;
     }
-    public int getPrivateMessageId() {
+    
+    public PrivateMessage() {
+        super();
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
         return id;
     }
 
-    public void setPrivateMessageId(int id) {
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return the messageText
+     */
     public String getMessageText() {
         return messageText;
     }
 
+    /**
+     * @param messageText the messageText to set
+     */
     public void setMessageText(String messageText) {
         this.messageText = messageText;
     }
-
 }

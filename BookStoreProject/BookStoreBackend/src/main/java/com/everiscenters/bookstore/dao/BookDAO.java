@@ -14,7 +14,7 @@ import com.everiscenters.bookstore.model.Book;
 /**
  * AbstractDAO.java
  * 
- * This DAO class provides CRUD database operations for the table book  in the database.
+ * Esta classe pertencente ao DAO possibilita operações CRUD na base de dados para a tabela livros.
  * 
  *  @author Copyright 2018 everis group
  *
@@ -25,12 +25,23 @@ public class BookDAO {
 	private String jdbcPassword;
 	private Connection jdbcConnection;
 	
+        public BookDAO() {
+            super();
+            jdbcURL = null;
+            jdbcUsername = null;
+            jdbcPassword = null;
+            jdbcConnection = null;
+        }
+        
 	public BookDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) {
 		this.jdbcURL = jdbcURL;
 		this.jdbcUsername = jdbcUsername;
 		this.jdbcPassword = jdbcPassword;
 	}
 	
+        /** Método que tenta estabelecer uma ligação à base de dados.
+         * @throws SQLException 
+         */
 	protected void connect() throws SQLException {
 		if (jdbcConnection == null || jdbcConnection.isClosed()) {
 			try {
@@ -43,12 +54,21 @@ public class BookDAO {
 		}
 	}
 	
+        /** Método que desconecta-se da base de dados.
+         * @throws SQLException 
+         */
 	protected void disconnect() throws SQLException {
 		if (jdbcConnection != null && !jdbcConnection.isClosed()) {
 			jdbcConnection.close();
 		}
 	}
 	
+        /** Método que possibilita a inserção de um novo livro na Base de Dados, 
+         *  recorrendo a informação encapsulada num objecto do tipo Book.
+         * @param book
+         * @return
+         * @throws SQLException 
+         */
 	public boolean insertBook(Book book) throws SQLException {
 		String sql = "INSERT INTO book (book_id, title, author, price, publish_year, publisher) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		connect();
@@ -66,6 +86,11 @@ public class BookDAO {
 		return rowInserted;
 	}
 	
+        /** Método que devolve uma listagem completa de todos os livros presentes
+         *  na Base de Dados.
+         * @return
+         * @throws SQLException 
+         */
 	public List<Book> listAllBooks() throws SQLException {
 		List<Book> listBook = new ArrayList<Book>();
 		
@@ -96,6 +121,12 @@ public class BookDAO {
 		return listBook;
 	}
 	
+        /** Método que possibilita a eliminação de um registo da Base de Dados
+         *  relativo a um livro.
+         * @param book
+         * @return
+         * @throws SQLException 
+         */
 	public boolean deleteBook(Book book) throws SQLException {
 		String sql = "DELETE FROM book where book_id = ?";
 		
@@ -110,6 +141,12 @@ public class BookDAO {
 		return rowDeleted;		
 	}
 	
+        /** Método que actualiza a informação pertinente a um livro previamente 
+         *  presente na Base de Dados.
+         * @param book
+         * @return
+         * @throws SQLException 
+         */
 	public boolean updateBook(Book book) throws SQLException {
 		String sql = "UPDATE book SET title = ?, author = ?, price = ?";
 		sql += " WHERE book_id = ?";
@@ -127,6 +164,12 @@ public class BookDAO {
 		return rowUpdated;		
 	}
 	
+        /** Método que devolve informação pertinente a um livro presente na Base de 
+         *  Dados, mediante a apresentação de informação acerca do mesmo.
+         * @param id
+         * @return
+         * @throws SQLException 
+         */
 	public Book getBook(int id) throws SQLException {
 		Book book = null;
 		String sql = "SELECT * FROM book WHERE book_id = ?";

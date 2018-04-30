@@ -8,7 +8,7 @@ package com.everiscenters.bookstore.model;
 import java.sql.SQLType;
 import java.util.Date;
 
-/**
+/** Classe que representa a entidade Comentário.
  *
  * @author fvitordu
  */
@@ -25,28 +25,45 @@ public class Comment extends Post{
         super(idPost);
     }
 
+    /**
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return the textComment
+     */
     public String getTextComment() {
         return textComment;
     }
 
+    /**
+     * @param textComment the textComment to set
+     */
     public void setTextComment(String textComment) {
         this.textComment = textComment;
     }
 
-    public Date getcommentDate() {
+    /**
+     * @return the commentDate
+     */
+    public Date getCommentDate() {
         return commentDate;
     }
 
-    public void setcommentDate(Date commentDate) {
+    /**
+     * @param commentDate the commentDate to set
+     */
+    public void setCommentDate(Date commentDate) {
         this.commentDate = commentDate;
     }
-
 }

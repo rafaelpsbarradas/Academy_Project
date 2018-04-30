@@ -5,32 +5,44 @@
  */
 package com.everiscenters.bookstore.model;
 
-/**
+/** Classe que representa os Likes.
  *
  * @author fvitordu
  */
 public class Like {
-    int id;
-    int likeCounter;
+    private int id;
+    private int likeCounter;
 
     public Like(int id, int likeCounter) {
         this.id = id;
         this.likeCounter = likeCounter;
     }
-    public int getLikeId() {
+
+    /**
+     * @return the id
+     */
+    public int getId() {
         return id;
     }
 
-    public void setLikeId(int id) {
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return the likeCounter
+     */
     public int getLikeCounter() {
         return likeCounter;
     }
 
+    /**
+     * @param likeCounter the likeCounter to set
+     */
     public void setLikeCounter(int likeCounter) {
         this.likeCounter = likeCounter;
     }
-
 }

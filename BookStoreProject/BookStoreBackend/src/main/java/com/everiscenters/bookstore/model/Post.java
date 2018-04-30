@@ -7,7 +7,7 @@ package com.everiscenters.bookstore.model;
 
 import java.util.Date;
 
-/**
+/** Classe que representa a entidade Post.
  *
  * @author fvitordu
  */
@@ -46,36 +46,60 @@ public class Post {
         this.idPost = idPost;
         this.date = date;
     }
-    public int getPostId() {
+
+    /**
+     * @return the idPost
+     */
+    public int getIdPost() {
         return idPost;
     }
 
-    public void setPostId(int idPost) {
+    /**
+     * @param idPost the idPost to set
+     */
+    public void setIdPost(int idPost) {
         this.idPost = idPost;
     }
 
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return the date
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     * @param date the date to set
+     */
     public void setDate(Date date) {
         this.date = date;
     }
-    
-    public String getTitle() {
-        return title;
-    }
-    
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
+
+    /**
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @param description the description to set
+     */
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

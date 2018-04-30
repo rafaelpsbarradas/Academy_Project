@@ -42,13 +42,28 @@
                     </c:if>
                 </h2>
             </caption>
-            <c:if test="${book != null}">
-                <input type="hidden" name="id" value="<c:out value='${book.id}' />" />
-            </c:if>
+            <tr>
+                <th>Book ID:</th>
+                <td>
+                    <input type="text" name="id" value="<c:out value='${book.id}' />" />
+                </td>
+            </tr>
             <tr>
                 <th>Title:</th>
                 <td>
                     <input type="text" name="title" size="45" value="<c:out value='${book.title}' />" />
+                </td>
+            </tr>
+            <tr>
+                <th>Publisher:</th>
+                <td>
+                    <input type="text" name="publisher" size="45" value="<c:out value='${book.publisher}' />" />
+                </td>
+            </tr>
+            <tr>
+                <th>Publisher Year:</th>
+                <td>
+                    <input type="date" name="publisherYear" size="45" value="<c:out value='${book.publisherYear}' />" />
                 </td>
             </tr>
             <tr>

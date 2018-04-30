@@ -3,8 +3,8 @@ package com.everiscenters.bookstore.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.text.*;
 
 import javax.servlet.http.*;
 
@@ -67,7 +67,9 @@ public class ControllerServlet extends HttpServlet {
          *  @param response
          * @throws ServletException
          * @throws IOException
+         * @throws ParseException
          */
+        @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
@@ -80,7 +82,7 @@ public class ControllerServlet extends HttpServlet {
          * @param request
          * @param response
          * @throws ServletException
-         * @throws IOException 
+         * @throws IOException
          */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -141,7 +143,8 @@ public class ControllerServlet extends HttpServlet {
 				login(request, response);
 				break;
 			}
-		} catch (SQLException ex) {
+		}
+                catch (SQLException ex) {
 			throw new ServletException(ex);
 		}
 	}
@@ -403,9 +406,7 @@ public class ControllerServlet extends HttpServlet {
          * @throws IOException 
          */
 	private void showNewBookForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            
-                RequestDispatcher dispatcher = request.getRequestDispatcher("BookForm.jsp");
-		dispatcher.forward(request, response);
+                request.getRequestDispatcher("BookForm.jsp").forward(request, response);
 	}
         
         /** Método responsável por redireccionar da página actual para a página de 
@@ -446,17 +447,34 @@ public class ControllerServlet extends HttpServlet {
          * @throws SQLException
          * @throws IOException 
          */
-	private void insertBook(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-                int book_id = Integer.parseInt(request.getParameter("id"));
+	private void insertBook(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException  {
+                int book_id;
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
-                int publisher_year = Integer.parseInt(request.getParameter("publisherYear"));
-		float price = Float.parseFloat(request.getParameter("price"));
+                SimpleDateFormat publisher_year;
+                java.sql.Date sqlDate;
+		float price;
                 String publisher = request.getParameter("publisher");
-                //usar parâmetros aqui
-		Book newBook = new Book(book_id, title, author, price, publisher_year, publisher);
-		bookDAO.insertBook(newBook);
-		response.sendRedirect("booklist");
+                Book newBook;
+                if (title != null && author != null && publisher != null) {
+                    try {
+                        book_id = Integer.parseInt(request.getParameter("id"));
+                        publisher_year = new SimpleDateFormat("dd-mm-yyyy");
+                        sqlDate = new java.sql.Date(publisher_year.parse(request.getParameter("publisherYear")).getDate());
+                        price = Float.parseFloat(request.getParameter("price"));
+                        newBook = new Book(book_id, title, author, price, sqlDate, publisher);
+                        bookDAO.insertBook(newBook, userDAO.getUser(usernameCon).getUserId());
+                    }
+                    catch(NumberFormatException|ParseException pex) {
+                        showMessageDialog(null, "O formato de introdução de um dos campos está incorrecto!" + pex.getMessage());
+                    }
+                    finally {
+                        response.sendRedirect("booklist");
+                    }
+                }
+                else {
+                    showMessageDialog(null, "Nem todos os campos foram preenchidos!");
+                }
 	}
         
         /** Método que permite inserir um Post na Base de Dados relativo a um livro,

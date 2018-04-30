@@ -1,4 +1,8 @@
 package com.everiscenters.bookstore.model;
+
+import java.sql.Date;
+import java.text.*;
+
 /**
  * Book.java
  * 
@@ -13,7 +17,7 @@ public class Book {
     private String title;
     private String author;
     private float price;
-    private int publishYear;
+    private Date publishYear;
     private String publisher;
 
     public Book() {
@@ -23,7 +27,7 @@ public class Book {
     public Book(int id){
         this.id=id;
     }
-    public Book(String title, String author, float price, int publishYear, String publisher) {
+    public Book(String title, String author, float price, Date publishYear, String publisher) {
         this.title = title;
         this.author = author;
         this.price = price;
@@ -31,7 +35,7 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public Book(int id, String title, String author, float price, int publishYear, String publisher) {
+    public Book(int id, String title, String author, float price, Date publishYear, String publisher) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -58,14 +62,14 @@ public class Book {
     /**
      * @return the publishYear
      */
-    public int getPublishYear() {
+    public Date getPublishYear() {
         return publishYear;
     }
 
     /**
      * @param publishYear the publishYear to set
      */
-    public void setPublishYear(int publishYear) {
+    public void setPublishYear(Date publishYear) {
         this.publishYear = publishYear;
     }
 

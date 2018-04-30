@@ -9,8 +9,27 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Register</title>
+    
+    <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #9aae04;
+        color: white;
+        text-align: center;
+    }
+    </style>
 </head>
 <body>
+    
+    <center>
+        <img src="https://www.everis.com/sites/all/themes/everis/logo.png" alt="logo" />
+    </center>
+
+
+    <div align="center" >
     <form method="POST" action="register">
         <h1>Register</h1>
         <label for="username">Username</label>
@@ -38,8 +57,11 @@
         <input type="submit" value="Register" />
         <input type="reset" value="Reset" />
     </form>
+    </div>
+<div align="center" >
     <form method="POST" action="login">
         <input type="submit" value="Login" />
     </form>
+</div>
 </body>
 </html>

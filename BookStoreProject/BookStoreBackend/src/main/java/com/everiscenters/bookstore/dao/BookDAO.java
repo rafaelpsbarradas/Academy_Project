@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,16 +70,18 @@ public class BookDAO {
          * @return
          * @throws SQLException 
          */
-	public boolean insertBook(Book book) throws SQLException {
-		String sql = "INSERT INTO book (book_id, title, author, price, publish_year, publisher) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public boolean insertBook(Book book, int fk_user) throws SQLException {
+		String sql = "INSERT INTO book (book_id, title, author, price, publish_year, publisher, FK_user) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		connect();
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-		statement.setString(1, book.getTitle());
-		statement.setString(2, book.getAuthor());
-		statement.setFloat(3, book.getPrice());
-                statement.setInt(4, book.getPublishYear());
-                statement.setString(5, book.getPublisher());
+                statement.setInt(1, book.getId());
+		statement.setString(2, book.getTitle());
+		statement.setString(3, book.getAuthor());
+		statement.setFloat(4, book.getPrice());
+                statement.setDate(5, book.getPublishYear());
+                statement.setString(6, book.getPublisher());
+                statement.setInt(7, fk_user);
 		
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
@@ -106,7 +109,7 @@ public class BookDAO {
 			String title = resultSet.getString("title");
 			String author = resultSet.getString("author");
 			float price = resultSet.getFloat("price");
-                        int publishYear = resultSet.getInt("publish_year");
+                        java.sql.Date publishYear = resultSet.getDate("publish_year");
                         String publisher = resultSet.getString("publisher");
 			
 			Book book = new Book(id, title, author, price, publishYear, publisher);
@@ -185,8 +188,9 @@ public class BookDAO {
 			String title = resultSet.getString("title");
 			String author = resultSet.getString("author");
 			float price = resultSet.getFloat("price");
-			
-			book = new Book(id, title, author, price, id, author);
+			java.sql.Date sqlDate = resultSet.getDate("publisher_year");
+                        
+			book = new Book(id, title, author, price, sqlDate, author);
 		}
 		
 		resultSet.close();

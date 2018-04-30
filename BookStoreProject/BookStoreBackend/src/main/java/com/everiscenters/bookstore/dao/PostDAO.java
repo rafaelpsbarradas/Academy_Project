@@ -198,4 +198,39 @@ public class PostDAO {
 
         return post;
     }
+
+    public List<Post> listUserPost(int userId) throws SQLException {
+        List<Post> listPost = new ArrayList<>();
+
+        String sql = "SELECT * FROM posts WHERE FK_user = ?";
+
+        connect();
+
+        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+//        if(resultSet.next()){
+        while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                Date date = resultSet.getDate("date");
+                String description = resultSet.getString("description");
+
+                Post post = new Post(title, description, date);
+                listPost.add(post);
+        }
+//        } else {
+//            String title = resultSet.getString("title");
+//            Date date = resultSet.getDate("date");
+//            String description = resultSet.getString("description");
+//            Post post = new Post(title, description, date);
+//            listPost.add(post);
+//        }
+
+        resultSet.close();
+        statement.close();
+
+        disconnect();
+
+        return listPost;
+    }
 }

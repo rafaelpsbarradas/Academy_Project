@@ -82,7 +82,7 @@
         <img src="https://www.everis.com/sites/all/themes/everis/logo.png" alt="logo" />
     </center>
     <div class="navbar">
-        <a href="main">MainPage</a>
+        <a href="voltarMain">MainPage</a>
         <a href="booklist">BookList</a>
         <a href="postlist">PostList</a>
         <div class="topnav-right">

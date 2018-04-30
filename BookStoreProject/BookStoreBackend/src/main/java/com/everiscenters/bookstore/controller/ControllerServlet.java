@@ -128,6 +128,9 @@ public class ControllerServlet extends HttpServlet {
                         case "/changeProfile":
 				change(request, response);
 				break;
+                        case "/voltarMain":
+                                voltarMain(request, response);
+                            break;
                         case "/showRegister":
 				showRegister(request, response);
 				break;
@@ -136,6 +139,18 @@ public class ControllerServlet extends HttpServlet {
 				break;
                         case "/logout":
 				logout(request, response);
+				break;
+                        case "/deletePost":
+				deletePost(request, response);
+				break;
+			case "/editPost":
+				showEditPost(request, response);
+				break;
+                        case "/updatePost":
+				updatePost(request, response);
+				break;
+                            case "/myPost":
+				myPost(request, response);
 				break;
 			default:
 				login(request, response);
@@ -171,7 +186,7 @@ public class ControllerServlet extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("BookList.jsp");
                 dispatcher.forward(request, response);
             } else {
-                showMessageDialog(null, "Não tem permissões para aceder a esta página!");
+                System.out.println("Não tem permissões para aceder a esta página!");
             }
 	}
         
@@ -186,15 +201,14 @@ public class ControllerServlet extends HttpServlet {
          */
         private void listPost(HttpServletRequest request, HttpServletResponse response)
                 throws SQLException, IOException, ServletException {
-            HttpSession session=request.getSession(false);  
-            String usernameCon=(String)session.getAttribute("sessionUsername");  
-            if(usernameCon.equals("rafael") || usernameCon.equals("fernando")){
+            
+            if(usernameCon != null){
                 List<Post> listPost = postDAO.listAllPosts();
                 request.setAttribute("listPost", listPost);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("PostList.jsp");
                 dispatcher.forward(request, response);
             } else {
-                showMessageDialog(null, "Não tem permissões para aceder a esta página!");
+                System.out.println("Utilizador sem conta activa");;
             }
 	}
 	
@@ -456,7 +470,7 @@ public class ControllerServlet extends HttpServlet {
                 //usar parâmetros aqui
 		Book newBook = new Book(book_id, title, author, price, publisher_year, publisher);
 		bookDAO.insertBook(newBook);
-		response.sendRedirect("booklist");
+		response.sendRedirect("insertBook");
 	}
         
         /** Método que permite inserir um Post na Base de Dados relativo a um livro,
@@ -467,17 +481,24 @@ public class ControllerServlet extends HttpServlet {
          * @throws IOException 
          */
         private void insertPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		String title = request.getParameter("title");
-		int id = Integer.parseInt(request.getParameter("bookid"));
-		String description = request.getParameter("description");
+            
+            if(request != null && request.getParameter("title") != null && request.getParameter("bookid") != null && 
+                    request.getParameter("description") != null && usernameCon != null) {
                 
+                String title = request.getParameter("title");
+                int id = Integer.parseInt(request.getParameter("bookid"));
+                String description = request.getParameter("description");
+
                 HttpSession session=request.getSession(false);  
                 String usernameCon = (String)session.getAttribute("sessionUsername"); 
-                
+
                 int userid = userDAO.getUser(usernameCon).getUserId();
-            
-		postDAO.insertPost(title, description, id, userid);
-		response.sendRedirect("newpost");
+
+                postDAO.insertPost(title, description, id, userid);
+                response.sendRedirect("newpost");
+            } else{
+                System.out.println("certifique-se que preencheu todos os campos");
+            }
 	}
         
         /** Método que possibilita a modificação de dados relativos a um dado
@@ -526,5 +547,40 @@ public class ControllerServlet extends HttpServlet {
         
         
         request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
+    }
+
+    private void voltarMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("MainPage.jsp").forward(request, response); 
+    }
+
+    private void updatePost(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
+
+    private void showEditPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+//            int id = Integer.parseInt(request.getParameter("id"));
+//            Post existingPost = postDAO.getPost(id);
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("PostForm.jsp");
+//            request.setAttribute("post", existingPost);
+//            dispatcher.forward(request, response);
+    }
+
+    private void deletePost(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Post post = new Post(id);
+        postDAO.deletePost(post);
+        response.sendRedirect("postlist");
+    }
+
+    private void myPost(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        if(usernameCon != null){
+                int userId = userDAO.getUser(usernameCon).getUserId();
+                List<Post> listPost = postDAO.listUserPost(userId);
+                request.setAttribute("listPost", listPost);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("PostList.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                System.out.println("Não tem sessão activa!");
+            }
     }
 }

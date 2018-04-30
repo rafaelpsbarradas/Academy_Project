@@ -44,13 +44,26 @@
                     <td><c:out value="${book.publisher}" /></td>
                     <td><c:out value="${book.publishYear}" /></td>
                     <td><c:out value="${book.price}" /></td>
-                    <td><a href="edit?id=<c:out value='${book.id}' />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td>
+                        <!--<a href="edit?id=<c:out value='${book.id}' />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
                         <a href="delete?id=<c:out value='${book.id}' />">Delete</a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
     </div>
+    <div align="center">
+        <form method="POST" action="voltarMain">
+                <input type="submit" value="Voltar à Main Page" />
+        </form>
+    </div>
+
+    <div align="center">
+        <form method="POST" action="newpost">
+            <input type="submit" value="Add Post" />
+        </form>
+    </div>
+
     <div class="footer">
         <p>&copy; Copyright 2018 everis group</p>
     </div>

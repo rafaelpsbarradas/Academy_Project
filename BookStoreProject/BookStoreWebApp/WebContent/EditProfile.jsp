@@ -13,8 +13,24 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit User Profile</title>
+        <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #9aae04;
+        color: white;
+        text-align: center;
+    }
+    </style>
     </head>
     <body>
+        <center>
+            <img src="https://www.everis.com/sites/all/themes/everis/logo.png" alt="logo" />
+        </center>
+    
+        <div align="center" >
         <form method="POST" action="changeProfile">
             <h1>User: <c:out value="${username}" /></h1>
             <label>Password</label>
@@ -36,9 +52,12 @@
             <input type="submit" value="Change" />
             <input type="reset" value="Reset" />
         </form>
+        </div>
         
-        <form method="POST" action="main">
+        <div align="center" >
+        <form method="POST" action="voltarMain">
             <input type="submit" value="Voltar" />
         </form>
+        </div>
     </body>
 </html>

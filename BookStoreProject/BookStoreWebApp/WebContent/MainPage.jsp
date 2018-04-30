@@ -98,7 +98,7 @@
             </button>
             <div class="dropdown-content">
                 <a href="newpost">AddNewPost</a>
-                <a href="booklist">MyRecentPosts</a>
+                <a href="myPost">MyRecentPosts</a>
                 <a href="postlist">RecentPosts</a>
             </div>
         </div>

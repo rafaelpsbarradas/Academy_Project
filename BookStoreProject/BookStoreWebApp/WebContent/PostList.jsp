@@ -48,7 +48,20 @@
                     </tr>  
                 </c:forEach>  
             </table>
-        </div>  
+        </div>
+                
+                <div>
+                    <form method="POST" action="newpost">
+                        <input type="submit" value="Add Post" />
+                    </form>
+                </div>
+                
+                <div>
+                    <form method="POST" action="voltarMain">
+                        <input type="submit" value="Voltar à Main Page" />
+                    </form>
+                </div>
+                
     </center>
     <div class="footer">
 	<p>&copy; Copyright 2018 everis group</p>

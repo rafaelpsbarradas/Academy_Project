@@ -46,6 +46,7 @@ public class ControllerServlet extends HttpServlet {
 	private BookDAO bookDAO;
         private PostDAO postDAO;
         private UserDAO userDAO;
+        private String usernameCon;
         /** Método de inicialização da instância; atenção, não é suposto ser método de classe, mas apenas um método
          *  cuja invocação é da máxima prioridade quando comparado com os restantes métodos de instância.
             */
@@ -117,6 +118,9 @@ public class ControllerServlet extends HttpServlet {
                         case "/main":
 				main(request, response);
 				break;
+                        case "/showEditProfile":
+				showEditProfile(request, response);
+				break; 
                         case "/listUser":
 				break;
 				//listUser(request, response);
@@ -210,7 +214,8 @@ public class ControllerServlet extends HttpServlet {
                         userDAO.getUser(request.getParameter("username")).getPassword().equals(request.getParameter("password"))) {
                     //Criar Sessão
                     HttpSession session = request.getSession(); 
-                    session.setAttribute("sessionUsername", request.getParameter("username"));
+                    session.setAttribute("sessionUsername", (usernameCon = request.getParameter("username")));
+                    
                     //Redirect to Main Page
                     RequestDispatcher dispatcher = request.getRequestDispatcher("MainPage.jsp");
                     dispatcher.forward(request, response);
@@ -241,6 +246,10 @@ public class ControllerServlet extends HttpServlet {
                 session.invalidate();
             }
             
+            if(usernameCon != null) {
+                usernameCon = null;
+            }
+            
             //Redirecciona para a página do Login
             RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
             dispatcher.forward(request, response);
@@ -269,8 +278,47 @@ public class ControllerServlet extends HttpServlet {
         private void change(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
             //Verificar sessão
             //Buscar dados da sessão
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
-            dispatcher.forward(request, response);
+            String password1Req = request.getParameter("password1");
+            String password2Req = request.getParameter("password2");
+            String email = request.getParameter("email");
+            String first = request.getParameter("first");
+            String second = request.getParameter("second");
+            //Verificar se nao existe dados vazios
+            if(request != null && usernameCon != null && password1Req != null && 
+                    password2Req != null && email != null && first != null && second != null) {
+                if(!usernameCon.isEmpty() && !password1Req.isEmpty() && 
+                        !password2Req.isEmpty() && !email.isEmpty() && !first.isEmpty() && !second.isEmpty()){
+                if(password1Req.equals(password2Req)){
+                    
+                    User user = new User();
+                    user.setUsername(usernameCon);
+                    user.setPassword(password1Req);
+                    user.setEmail(email);
+                    user.setFirstName(first);
+                    user.setLastName(second);
+                    
+                    if(userDAO.getUser(user.getEmail()) == null){
+                       
+                        userDAO.updateUser(user);
+
+                        request.getRequestDispatcher("MainPage.jsp").forward(request, response);
+                      
+                    } else {
+                            System.out.println("Email já utilizados");
+                            response.sendRedirect("editprofile");
+                        }
+                } else { 
+                        System.out.println("Password não estão iguais");
+                        response.sendRedirect("editprofile");
+                    }
+            } else { 
+                    System.out.println("Certifique-se que todos os campos se encontram preenchidos");
+                    response.sendRedirect("editprofile");
+                }
+            } else { 
+                    System.out.println("Certifique-se que todos os campos se encontram preenchidos");
+                    response.sendRedirect("editprofile");
+                }
 	}
         
         /** Método que possibilita a criação de um novo utilizador mediante preenchimento
@@ -463,4 +511,20 @@ public class ControllerServlet extends HttpServlet {
 		bookDAO.deleteBook(book);
 		response.sendRedirect("list");
 	}
+    /**
+     * 
+     * @param request
+     * @param response 
+     */
+    private void showEditProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        User user = userDAO.getUser(usernameCon);
+        request.setAttribute("username", user.getUsername());
+        request.setAttribute("email", user.getEmail());
+        request.setAttribute("first", user.getFirstName());
+        request.setAttribute("second", user.getLastName());
+        request.setAttribute("password", user.getPassword());
+        
+        
+        request.getRequestDispatcher("EditProfile.jsp").forward(request, response);
+    }
 }

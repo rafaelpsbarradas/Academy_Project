@@ -146,8 +146,8 @@ public class UserDAO {
      * @throws SQLException 
      */
     public boolean updateUser(User user) throws SQLException {
-        String sql = "UPDATE users SET  password=?, email=?, first_name=?, last_name=?, data_nascimento=?";
-        sql += " WHERE id = ?";
+        String sql = "UPDATE users SET  password=?, email=?, first_name=?, last_name=?";
+        sql += " WHERE username = ?";
         connect();
 
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
@@ -155,6 +155,7 @@ public class UserDAO {
         statement.setString(2, user.getEmail());
         statement.setString(3, user.getFirstName());
         statement.setString(4, user.getLastName());
+        statement.setString(5, user.getUsername());
 
         boolean rowUpdated = statement.executeUpdate() > 0;
         statement.close();

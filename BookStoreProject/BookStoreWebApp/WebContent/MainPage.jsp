@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,11 +85,11 @@
     </center>
     <div class="navbar">
         <div class="dropdown">
-            <button class="dropbtn">Username(meternome)
+            <button class="dropbtn"><c:out value="${sessionUsername}" />
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="">EditProfile</a>
+                <a href="showEditProfile">EditProfile</a>
             </div>
         </div>
         <div class="dropdown">
